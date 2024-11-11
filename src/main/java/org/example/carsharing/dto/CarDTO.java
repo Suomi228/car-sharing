@@ -1,31 +1,30 @@
-package org.example.carsharing.models;
+package org.example.carsharing.dto;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name="car")
-public class CarEntity extends BaseEntity{
+public class CarDTO {
+    private long id;
     private String name;
     private int year;
     private String number;
     private String carClass;
     private double hourPrice;
-    private String status;
 
-    protected CarEntity() {}
-
-    protected CarEntity(double hourPrice, String carClass, String number, int year, String name, String status) {
-        this.hourPrice = hourPrice;
-        this.carClass = carClass;
-        this.number = number;
-        this.year = year;
+    public CarDTO(long id, String name, int year, String number, String carClass, double hourPrice) {
+        this.id = id;
         this.name = name;
-        this.status=status;
+        this.year = year;
+        this.number = number;
+        this.carClass = carClass;
+        this.hourPrice = hourPrice;
     }
-    @Column(name = "name")
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -33,7 +32,7 @@ public class CarEntity extends BaseEntity{
     public void setName(String name) {
         this.name = name;
     }
-    @Column(name = "year")
+
     public int getYear() {
         return year;
     }
@@ -41,7 +40,7 @@ public class CarEntity extends BaseEntity{
     public void setYear(int year) {
         this.year = year;
     }
-    @Column(name = "number")
+
     public String getNumber() {
         return number;
     }
@@ -49,7 +48,7 @@ public class CarEntity extends BaseEntity{
     public void setNumber(String number) {
         this.number = number;
     }
-    @Column(name = "car_class")
+
     public String getCarClass() {
         return carClass;
     }
@@ -57,20 +56,12 @@ public class CarEntity extends BaseEntity{
     public void setCarClass(String carClass) {
         this.carClass = carClass;
     }
-    @Column(name = "hour_price")
+
     public double getHourPrice() {
         return hourPrice;
     }
 
     public void setHourPrice(double hourPrice) {
         this.hourPrice = hourPrice;
-    }
-    @Column(name = "status")
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 }
