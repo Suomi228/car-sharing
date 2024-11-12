@@ -1,5 +1,6 @@
 package org.example.carsharing.repositories;
 
+import org.example.carsharing.models.CustomerEntity;
 import org.example.carsharing.models.DamageReportEntity;
 import org.springframework.stereotype.Repository;
 
@@ -10,4 +11,5 @@ public interface DamageReportRepository extends BaseRepository<DamageReportEntit
 //    List<DamageReportEntity> findByCar_Id(Long carId);
 //    List<DamageReportEntity> findByDiscoveryDateBetween(String startDate, String endDate);
 //    List<DamageReportEntity> findByRepairPriceGreaterThanAndRepairPriceIsNull(double minRepairCost);
+    List<DamageReportEntity> findAll();
 }
