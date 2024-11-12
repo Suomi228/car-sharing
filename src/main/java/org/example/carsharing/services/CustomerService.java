@@ -1,11 +1,11 @@
 package org.example.carsharing.services;
 
-import org.example.carsharing.dto.CarDTO;
+import org.example.carsharing.dto.CustomerDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface CarService {
-    ResponseEntity<List<CarDTO>> findAll();
+public interface CustomerService {
+    ResponseEntity<List<CustomerDTO>> findAll();
 }

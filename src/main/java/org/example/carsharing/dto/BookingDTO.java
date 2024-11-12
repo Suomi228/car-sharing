@@ -8,6 +8,8 @@ public class BookingDTO {
     private String endDate;
     private String status;
 
+    public BookingDTO() {}
+
     public BookingDTO(long id, long carId, long customerId, String startDate, String endDate, String status) {
         this.id = id;
         this.carId = carId;

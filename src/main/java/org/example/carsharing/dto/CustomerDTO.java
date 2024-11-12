@@ -7,6 +7,9 @@ public class CustomerDTO {
     private String number;
     private String driverLicense;
 
+
+    public CustomerDTO() {};
+
     public CustomerDTO(long id, String firstName, String lastName, String number, String driverLicense) {
         this.id = id;
         this.firstName = firstName;

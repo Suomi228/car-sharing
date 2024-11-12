@@ -7,6 +7,8 @@ public class DamageReportDTO {
     private String discoveryDate;
     private double repairPrice;
 
+    public DamageReportDTO() {};
+
     public DamageReportDTO(long carId, String damageDescription, String discoveryDate, double repairPrice) {
         this.carId = carId;
         this.damageDescription = damageDescription;

@@ -7,14 +7,25 @@ public class CarDTO {
     private String number;
     private String carClass;
     private double hourPrice;
+    private String status;
+    public CarDTO() {};
 
-    public CarDTO(long id, String name, int year, String number, String carClass, double hourPrice) {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public CarDTO(long id, String name, int year, String number, String carClass, double hourPrice, String status) {
         this.id = id;
         this.name = name;
         this.year = year;
         this.number = number;
         this.carClass = carClass;
         this.hourPrice = hourPrice;
+        this.status = status;
     }
 
     public long getId() {

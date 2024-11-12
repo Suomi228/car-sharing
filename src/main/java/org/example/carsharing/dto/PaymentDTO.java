@@ -6,6 +6,8 @@ public class PaymentDTO {
     private String paymentDate;
     private String paymentStatus;
 
+    public PaymentDTO() {};
+
     public PaymentDTO(long bookingId, double totalPrice, String paymentDate, String paymentStatus) {
         this.bookingId = bookingId;
         this.totalPrice = totalPrice;

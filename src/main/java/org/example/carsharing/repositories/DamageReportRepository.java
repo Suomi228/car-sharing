@@ -7,8 +7,7 @@ import java.util.List;
 
 @Repository
 public interface DamageReportRepository extends BaseRepository<DamageReportEntity, Long>{
-    List<DamageReportEntity> findByCar_Id(Long carId);
-
-    List<DamageReportEntity> findByDiscoveryDateBetween(String startDate, String endDate);
-    List<DamageReportEntity> findByRepairPriceGreaterThanAndRepairPriceIsNull(double minRepairCost);
+//    List<DamageReportEntity> findByCar_Id(Long carId);
+//    List<DamageReportEntity> findByDiscoveryDateBetween(String startDate, String endDate);
+//    List<DamageReportEntity> findByRepairPriceGreaterThanAndRepairPriceIsNull(double minRepairCost);
 }
