@@ -2,6 +2,7 @@ package org.example.carsharing.models;
 
 
 import jakarta.persistence.*;
+import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.constants.CarStatus;
 
 import java.time.LocalDateTime;
@@ -12,14 +13,14 @@ public class CarEntity extends BaseEntity{
     private String name;
     private int year;
     private String number;
-    private String carClass;
+    private CarClass carClass;
     private double hourPrice;
     private CarStatus status;
     private String adress;
 
     protected CarEntity() {}
 
-    protected CarEntity(double hourPrice, String carClass, String number, int year, String name, CarStatus status, String adress) {
+    protected CarEntity(double hourPrice, CarClass carClass, String number, int year, String name, CarStatus status, String adress) {
         this.hourPrice = hourPrice;
         this.carClass = carClass;
         this.number = number;
@@ -61,12 +62,13 @@ public class CarEntity extends BaseEntity{
     public void setNumber(String number) {
         this.number = number;
     }
+    @Enumerated(EnumType.STRING)
     @Column(name = "car_class")
-    public String getCarClass() {
+    public CarClass getCarClass() {
         return carClass;
     }
 
-    public void setCarClass(String carClass) {
+    public void setCarClass(CarClass carClass) {
         this.carClass = carClass;
     }
     @Column(name = "hour_price")
@@ -105,4 +107,5 @@ public class CarEntity extends BaseEntity{
                     System.out.println("");
                 }
             }
-}}
+        }
+}

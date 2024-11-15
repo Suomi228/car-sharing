@@ -1,5 +1,6 @@
 package org.example.carsharing.dto;
 
+import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.constants.CarStatus;
 
 public class CarDTO {
@@ -7,7 +8,7 @@ public class CarDTO {
     private String name;
     private int year;
     private String number;
-    private String carClass;
+    private CarClass carClass;
     private double hourPrice;
     private CarStatus status;
     private String adress;
@@ -21,7 +22,7 @@ public class CarDTO {
         this.status = status;
     }
 
-    public CarDTO(long id, String name, int year, String number, String carClass, double hourPrice, CarStatus status, String adress) {
+    public CarDTO(long id, String name, int year, String number, CarClass carClass, double hourPrice, CarStatus status, String adress) {
         this.id = id;
         this.name = name;
         this.year = year;
@@ -72,11 +73,11 @@ public class CarDTO {
         this.number = number;
     }
 
-    public String getCarClass() {
+    public CarClass getCarClass() {
         return carClass;
     }
 
-    public void setCarClass(String carClass) {
+    public void setCarClass(CarClass carClass) {
         this.carClass = carClass;
     }
 

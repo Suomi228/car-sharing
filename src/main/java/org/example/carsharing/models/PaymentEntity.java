@@ -1,6 +1,7 @@
 package org.example.carsharing.models;
 
 import jakarta.persistence.*;
+import org.example.carsharing.constants.PaymentStatus;
 
 @Entity
 @Table(name="payment")
@@ -8,11 +9,11 @@ public class PaymentEntity extends BaseEntity{
     private BookingEntity booking;
     private double totalPrice;
     private String paymentDate;
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 
-    protected PaymentEntity() {}
+    public PaymentEntity() {}
 
-    public PaymentEntity(BookingEntity booking, double totalPrice, String paymentDate, String paymentStatus) {
+    public PaymentEntity(BookingEntity booking, double totalPrice, String paymentDate, PaymentStatus paymentStatus) {
         this.booking = booking;
         this.totalPrice = totalPrice;
         this.paymentDate = paymentDate;
@@ -43,12 +44,13 @@ public class PaymentEntity extends BaseEntity{
     public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
     }
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")
-    public String getPaymentStatus() {
+    public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 }

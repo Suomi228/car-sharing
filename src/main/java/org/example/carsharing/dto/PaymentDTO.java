@@ -1,14 +1,16 @@
 package org.example.carsharing.dto;
 
+import org.example.carsharing.constants.PaymentStatus;
+
 public class PaymentDTO {
     private long bookingId;
     private double totalPrice;
     private String paymentDate;
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 
     public PaymentDTO() {};
 
-    public PaymentDTO(long bookingId, double totalPrice, String paymentDate, String paymentStatus) {
+    public PaymentDTO(long bookingId, double totalPrice, String paymentDate, PaymentStatus paymentStatus) {
         this.bookingId = bookingId;
         this.totalPrice = totalPrice;
         this.paymentDate = paymentDate;
@@ -39,11 +41,11 @@ public class PaymentDTO {
         this.paymentDate = paymentDate;
     }
 
-    public String getPaymentStatus() {
+    public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 }
