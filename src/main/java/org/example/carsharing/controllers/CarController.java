@@ -3,6 +3,7 @@ package org.example.carsharing.controllers;
 import org.example.carsharing.constants.CarStatus;
 import org.example.carsharing.dto.BookingDTO;
 import org.example.carsharing.dto.CarDTO;
+import org.example.carsharing.dto.CarReturnRequestDTO;
 import org.example.carsharing.services.BookingService;
 import org.example.carsharing.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,13 @@ public class CarController {
     }
 
     @PostMapping("/return")
-    public ResponseEntity<BookingDTO> returnCar(
-            @RequestParam Long carId,
-            @RequestParam Long bookingId,
-            @RequestParam String carAddress) {
+    public ResponseEntity<BookingDTO> returnCar(@RequestBody CarReturnRequestDTO requestDTO) {
         ResponseEntity<BookingDTO> responseEntity;
-        responseEntity = carService.returnCar(carId, bookingId, carAddress);
+        responseEntity = carService.returnCar(
+                requestDTO.getCarId(),
+                requestDTO.getBookingId(),
+                requestDTO.getCarAddress()
+        );
         return responseEntity;
     }
 }
