@@ -87,8 +87,33 @@ public class CarServiceImpl implements CarService {
         BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
         bookingDTO.setCarId(car.getId());
         bookingDTO.setCustomerId(customer.getId());
+        ResponseEntity<BookingDTO> responseEntity = ResponseEntity.ok().body(bookingDTO);
+        return responseEntity;
+    }
 
-        return ResponseEntity.ok(bookingDTO);
+    @Override
+    public ResponseEntity<BookingDTO> returnCar(Long carId, Long bookingId, String carAdress) {
+        CarEntity car = carRepository.findById(carId);
+
+        BookingEntity booking = bookingRepository.findById(bookingId);
+
+        if (!(booking.getCar().getId() == (carId))) {
+            throw new IllegalArgumentException("No such booking with this car.");
+        }
+
+        car.setStatus(CarStatus.FREE);
+        car.setAdress(carAdress);
+        carRepository.save(car);
+
+        LocalDateTime now = LocalDateTime.now();
+        String formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        booking.setStatus(BookingStatus.DONE);
+        booking.setEndDate(formattedDate);
+        bookingRepository.save(booking);
+        BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
+        ResponseEntity<BookingDTO> responseEntity = ResponseEntity.ok().body(bookingDTO);
+        return responseEntity;
     }
 
 }

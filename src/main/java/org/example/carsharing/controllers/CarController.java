@@ -37,6 +37,18 @@ public class CarController {
     @PostMapping("/rent")
     public ResponseEntity<BookingDTO> rentCar(@RequestParam Long customerId, @RequestParam Long carId) {
         System.out.println("Controller triggered: customerId=" + customerId + ", carId=" + carId);
-        return carService.rentCar(customerId, carId);
+        ResponseEntity<BookingDTO> responseEntity;
+        responseEntity = carService.rentCar(customerId, carId);
+        return responseEntity;
+    }
+
+    @PostMapping("/return")
+    public ResponseEntity<BookingDTO> returnCar(
+            @RequestParam Long carId,
+            @RequestParam Long bookingId,
+            @RequestParam String carAddress) {
+        ResponseEntity<BookingDTO> responseEntity;
+        responseEntity = carService.returnCar(carId, bookingId, carAddress);
+        return responseEntity;
     }
 }
