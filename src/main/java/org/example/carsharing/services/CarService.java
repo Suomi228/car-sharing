@@ -10,4 +10,6 @@ import java.util.List;
 public interface CarService {
     ResponseEntity<List<CarDTO>> findAll();
     ResponseEntity<CarDTO> updateStatus(Long id, CarStatus carStatus);
+    ResponseEntity<String> rentCar(Long customerId, Long carId);
+
 }

@@ -1,6 +1,8 @@
 package org.example.carsharing.models;
 
 import jakarta.persistence.*;
+import org.example.carsharing.constants.BookingStatus;
+import org.example.carsharing.constants.CarStatus;
 
 @Entity
 @Table(name="booking")
@@ -10,11 +12,11 @@ public class BookingEntity extends BaseEntity{
     private CustomerEntity customer;
     private String startDate;
     private String endDate;
-    private String status;
+    private BookingStatus status;
 
-    protected BookingEntity() {}
+    public BookingEntity() {}
 
-    public BookingEntity(CarEntity car, CustomerEntity customer, String startDate, String endDate, String status) {
+    public BookingEntity(CarEntity car, CustomerEntity customer, String startDate, String endDate, BookingStatus status) {
         this.car = car;
         this.customer = customer;
         this.startDate = startDate;
@@ -57,12 +59,26 @@ public class BookingEntity extends BaseEntity{
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    public String getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BookingStatus status) {
         this.status = status;
     }
-}
+
+    public void changeStatus(BookingStatus bookingStatus) {
+        switch (bookingStatus) {
+            case CONFIRMED -> {
+                this.status = bookingStatus.CONFIRMED;
+            }
+            case DONE -> {
+                this.status = bookingStatus.DONE;
+            }
+            default -> {
+                System.out.println("");
+            }
+        }
+}}

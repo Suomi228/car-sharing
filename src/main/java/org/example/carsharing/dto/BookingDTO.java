@@ -1,16 +1,18 @@
 package org.example.carsharing.dto;
 
+import org.example.carsharing.constants.BookingStatus;
+
 public class BookingDTO {
     private long id;
     private long carId;
     private long customerId;
     private String startDate;
     private String endDate;
-    private String status;
+    private BookingStatus status;
 
     public BookingDTO() {}
 
-    public BookingDTO(long id, long carId, long customerId, String startDate, String endDate, String status) {
+    public BookingDTO(long id, long carId, long customerId, String startDate, String endDate, BookingStatus status) {
         this.id = id;
         this.carId = carId;
         this.customerId = customerId;
@@ -39,7 +41,7 @@ public class BookingDTO {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(long customerId) {
         this.customerId = customerId;
     }
 
@@ -59,11 +61,11 @@ public class BookingDTO {
         this.endDate = endDate;
     }
 
-    public String getStatus() {
+    public BookingStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BookingStatus status) {
         this.status = status;
     }
 }

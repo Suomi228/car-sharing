@@ -33,4 +33,10 @@ public class CarController {
         responseEntity = carService.updateStatus(id, status);
         return responseEntity;
     }
+
+    @PostMapping("/rent")
+    public ResponseEntity<String> rentCar(@RequestParam Long customerId, @RequestParam Long carId) {
+        System.out.println("Controller triggered: customerId=" + customerId + ", carId=" + carId);
+        return carService.rentCar(customerId, carId);
+    }
 }
