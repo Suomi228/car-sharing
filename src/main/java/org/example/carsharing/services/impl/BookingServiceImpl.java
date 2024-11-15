@@ -33,4 +33,14 @@ public class BookingServiceImpl implements BookingService {
         ResponseEntity<List<BookingDTO>> responseEntity = ResponseEntity.ok().body(bookingDTOS);
         return responseEntity;
     }
+
+    @Override
+    public ResponseEntity<List<BookingDTO>> findByCustomerId(Long customerId) {
+        List<BookingEntity> bookingEntities = bookingRepository.findByCustomerId(customerId);
+        List<BookingDTO> bookingDTOS = bookingEntities.stream()
+                .map(booking -> modelMapper.map(booking, BookingDTO.class))
+                .toList();
+        ResponseEntity<List<BookingDTO>> responseEntity = ResponseEntity.ok().body(bookingDTOS);
+        return responseEntity;
+    }
 }

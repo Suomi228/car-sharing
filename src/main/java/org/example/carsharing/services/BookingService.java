@@ -9,4 +9,5 @@ import java.util.List;
 @Service
 public interface BookingService {
     ResponseEntity<List<BookingDTO>> findAll();
+    ResponseEntity<List<BookingDTO>> findByCustomerId(Long customerId);
 }
