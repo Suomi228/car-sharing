@@ -14,17 +14,28 @@ public class CarEntity extends BaseEntity{
     private String carClass;
     private double hourPrice;
     private String status;
+    private String adress;
 
     protected CarEntity() {}
 
-    protected CarEntity(double hourPrice, String carClass, String number, int year, String name, String status) {
+    protected CarEntity(double hourPrice, String carClass, String number, int year, String name, String status, String adress) {
         this.hourPrice = hourPrice;
         this.carClass = carClass;
         this.number = number;
         this.year = year;
         this.name = name;
         this.status=status;
+        this.adress = adress;
     }
+    @Column(name = "adress")
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
     @Column(name = "name")
     public String getName() {
         return name;

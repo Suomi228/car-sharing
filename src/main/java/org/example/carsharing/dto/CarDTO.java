@@ -8,6 +8,7 @@ public class CarDTO {
     private String carClass;
     private double hourPrice;
     private String status;
+    private String adress;
     public CarDTO() {};
 
     public String getStatus() {
@@ -18,7 +19,7 @@ public class CarDTO {
         this.status = status;
     }
 
-    public CarDTO(long id, String name, int year, String number, String carClass, double hourPrice, String status) {
+    public CarDTO(long id, String name, int year, String number, String carClass, double hourPrice, String status, String adress) {
         this.id = id;
         this.name = name;
         this.year = year;
@@ -26,6 +27,15 @@ public class CarDTO {
         this.carClass = carClass;
         this.hourPrice = hourPrice;
         this.status = status;
+        this.adress = adress;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public long getId() {
