@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -55,32 +57,38 @@ public class CarServiceImpl implements CarService {
         return responseEntity;
     }
     @Override
-    public ResponseEntity<String> rentCar(Long customerId, Long carId) {
+    public ResponseEntity<BookingDTO> rentCar(Long customerId, Long carId) {
         CarEntity car = carRepository.findById(carId);
         if (car == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car not found with id: " + carId);
+            throw new RuntimeException("No such carId");
         }
 
         CustomerEntity customer = customerRepository.findById(customerId);
         if (customer == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Customer not found with id: " + customerId);
+            throw new RuntimeException("No such customerId");
         }
 
         if (car.getStatus() == CarStatus.USED) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Car is already rented");
+            throw new RuntimeException("Car is already rented");
         }
 
         car.changeStatus(CarStatus.USED);
         carRepository.save(car);
 
+        LocalDateTime now = LocalDateTime.now();
+        String formattedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
         BookingEntity booking = new BookingEntity();
         booking.setCar(car);
         booking.setCustomer(customer);
         booking.setStatus(BookingStatus.CONFIRMED);
-        booking.setStartDate("2024-11-15");
+        booking.setStartDate(formattedDate);
         bookingRepository.save(booking);
+        BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
+        bookingDTO.setCarId(car.getId());
+        bookingDTO.setCustomerId(customer.getId());
 
-        return ResponseEntity.ok("Автомобиль успешно арендован");
+        return ResponseEntity.ok(bookingDTO);
     }
 
 }
