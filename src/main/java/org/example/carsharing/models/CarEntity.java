@@ -1,9 +1,10 @@
 package org.example.carsharing.models;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.example.carsharing.constants.CarStatus;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="car")
@@ -13,12 +14,12 @@ public class CarEntity extends BaseEntity{
     private String number;
     private String carClass;
     private double hourPrice;
-    private String status;
+    private CarStatus status;
     private String adress;
 
     protected CarEntity() {}
 
-    protected CarEntity(double hourPrice, String carClass, String number, int year, String name, String status, String adress) {
+    protected CarEntity(double hourPrice, String carClass, String number, int year, String name, CarStatus status, String adress) {
         this.hourPrice = hourPrice;
         this.carClass = carClass;
         this.number = number;
@@ -76,12 +77,32 @@ public class CarEntity extends BaseEntity{
     public void setHourPrice(double hourPrice) {
         this.hourPrice = hourPrice;
     }
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    public String getStatus() {
+    public CarStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(CarStatus status) {
         this.status = status;
     }
-}
+
+    public void changeStatus(CarStatus carStatus) {
+            switch (carStatus) {
+                case USED -> {
+                    this.status = carStatus.USED;
+                }
+                case FREE -> {
+                    this.status = carStatus.FREE;
+                }
+                case BROKEN -> {
+                    this.status = carStatus.BROKEN;
+                }
+                case IN_REPAIR -> {
+                    this.status = carStatus.IN_REPAIR;
+                }
+                default -> {
+                    System.out.println("");
+                }
+            }
+}}

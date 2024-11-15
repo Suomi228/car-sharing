@@ -10,4 +10,5 @@ public interface CarRepository extends BaseRepository<CarEntity, Long>{
 //    List<CarEntity> findByStatus(String status);
 //    List<CarEntity> findByCarClass(String carClass);
     List<CarEntity> findAll();
+    CarEntity findById(Long carId);
 }

@@ -1,14 +1,13 @@
 package org.example.carsharing.controllers;
 
+import org.example.carsharing.constants.CarStatus;
 import org.example.carsharing.dto.BookingDTO;
 import org.example.carsharing.dto.CarDTO;
 import org.example.carsharing.services.BookingService;
 import org.example.carsharing.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +25,12 @@ public class CarController {
     public ResponseEntity<List<CarDTO>> getCars() {
         ResponseEntity<List<CarDTO>> responseEntity;
         responseEntity = carService.findAll();
+        return responseEntity;
+    }
+    @PutMapping(path = "/updateStatus")
+    public ResponseEntity<CarDTO> updateStatus(@RequestParam Long id,@RequestParam CarStatus status) {
+        ResponseEntity<CarDTO> responseEntity;
+        responseEntity = carService.updateStatus(id, status);
         return responseEntity;
     }
 }

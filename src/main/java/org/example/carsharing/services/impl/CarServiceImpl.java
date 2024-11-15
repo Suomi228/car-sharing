@@ -1,5 +1,6 @@
 package org.example.carsharing.services.impl;
 
+import org.example.carsharing.constants.CarStatus;
 import org.example.carsharing.dto.BookingDTO;
 import org.example.carsharing.dto.CarDTO;
 import org.example.carsharing.models.BookingEntity;
@@ -33,6 +34,16 @@ public class CarServiceImpl implements CarService {
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
         ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
+        return responseEntity;
+    }
+
+    @Override
+    public ResponseEntity<CarDTO> updateStatus(Long id, CarStatus carStatus) {
+        CarEntity carEntity = carRepository.findById(id);
+        carEntity.changeStatus(carStatus);
+        CarEntity savedOrderEntity = carRepository.save(carEntity);
+        CarDTO carDTO = modelMapper.map(savedOrderEntity, CarDTO.class);
+        ResponseEntity<CarDTO> responseEntity = ResponseEntity.ok().body(carDTO);
         return responseEntity;
     }
 }
