@@ -1,6 +1,7 @@
 package org.example.carsharing.controllers;
 
 import org.example.carsharing.dto.BookingDTO;
+import org.example.carsharing.dto.RentInfoDto;
 import org.example.carsharing.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class BookingController {
         return responseEntity;
     }
     @GetMapping(path = "/get/{id}")
-    public ResponseEntity<List<BookingDTO>> getBookingsById(@PathVariable("id") Long id) {
-        ResponseEntity<List<BookingDTO>> responseEntity;
+    public ResponseEntity<List<RentInfoDto>> getBookingsById(@PathVariable("id") Long id) {
+        ResponseEntity<List<RentInfoDto>> responseEntity;
         responseEntity = bookingService.findByCustomerId(id);
         return responseEntity;
     }
