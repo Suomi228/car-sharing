@@ -61,7 +61,7 @@ public class CarController {
         return responseEntity;
     }
     @GetMapping("/carClass/{carClass}")
-    public ResponseEntity<List<CarDTO>> getFreeCars(@PathVariable CarClass carClass) {
+    public ResponseEntity<List<CarDTO>> getFreeCarsByStatus(@PathVariable CarClass carClass) {
         ResponseEntity<List<CarDTO>> responseEntity = carService.findByCarClass(carClass);
         return responseEntity;
     }

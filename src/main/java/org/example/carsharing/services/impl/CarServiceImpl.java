@@ -65,6 +65,7 @@ public class CarServiceImpl implements CarService {
     }
     @Override
     public ResponseEntity<BookingDTO> rentCar(Long customerId, Long carId) {
+        System.out.println("customer" + customerId + " carId " + carId);
         CarEntity car = carRepository.findById(carId);
         if (car == null) {
             throw new RuntimeException("No such carId");
