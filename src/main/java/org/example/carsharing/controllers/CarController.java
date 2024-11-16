@@ -1,5 +1,6 @@
 package org.example.carsharing.controllers;
 
+import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.constants.CarStatus;
 import org.example.carsharing.dto.BookingDTO;
 import org.example.carsharing.dto.CarDTO;
@@ -57,6 +58,11 @@ public class CarController {
     @GetMapping("/free")
     public ResponseEntity<List<CarDTO>> getFreeCars() {
         ResponseEntity<List<CarDTO>> responseEntity = carService.getFreeCars();
+        return responseEntity;
+    }
+    @GetMapping("/carClass/{carClass}")
+    public ResponseEntity<List<CarDTO>> getFreeCars(@PathVariable CarClass carClass) {
+        ResponseEntity<List<CarDTO>> responseEntity = carService.findByCarClass(carClass);
         return responseEntity;
     }
 }

@@ -1,8 +1,10 @@
 package org.example.carsharing.services;
 
+import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.constants.CarStatus;
 import org.example.carsharing.dto.BookingDTO;
 import org.example.carsharing.dto.CarDTO;
+import org.example.carsharing.models.CarEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -14,5 +16,6 @@ public interface CarService {
     ResponseEntity<BookingDTO> rentCar(Long customerId, Long carId);
     ResponseEntity<BookingDTO> returnCar(Long carId, Long bookingId, String carAddress);
     ResponseEntity<List<CarDTO>> getFreeCars();
+    ResponseEntity<List<CarDTO>> findByCarClass(CarClass carClass);
 
 }
