@@ -53,4 +53,10 @@ public class CarController {
         );
         return responseEntity;
     }
+
+    @GetMapping("/free")
+    public ResponseEntity<List<CarDTO>> getFreeCars() {
+        ResponseEntity<List<CarDTO>> responseEntity = carService.getFreeCars();
+        return responseEntity;
+    }
 }

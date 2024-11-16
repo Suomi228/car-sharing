@@ -135,4 +135,13 @@ public class CarServiceImpl implements CarService {
         return responseEntity;
     }
 
+    @Override
+    public ResponseEntity<List<CarDTO>> getFreeCars() {
+        List<CarEntity> freeCars = carRepository.findByStatus(CarStatus.FREE);
+        List<CarDTO> carDTOS = freeCars.stream()
+                .map(car -> modelMapper.map(car, CarDTO.class))
+                .toList();
+        ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
+        return responseEntity;
+    }
 }
