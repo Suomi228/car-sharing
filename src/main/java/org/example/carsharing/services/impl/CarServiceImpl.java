@@ -17,7 +17,6 @@ import org.example.carsharing.repositories.PaymentRepository;
 import org.example.carsharing.services.CarService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -122,7 +121,7 @@ public class CarServiceImpl implements CarService {
         LocalDateTime startDate = LocalDateTime.parse(booking.getStartDate(), formatter);
         long hours = ChronoUnit.HOURS.between(startDate, endDate);
         if (hours == 0) {
-            hours = 1; // Минимальная стоимость за один час
+            hours = 1;
         }
         double totalPrice = car.getHourPrice() * hours;
         PaymentEntity payment = new PaymentEntity();

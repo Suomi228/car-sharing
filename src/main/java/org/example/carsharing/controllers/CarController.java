@@ -23,8 +23,8 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping(path = "/findAll")
-    public ResponseEntity<List<CarDTO>> getCars() {
+    @GetMapping(path = "/getAllCars")
+    public ResponseEntity<List<CarDTO>> getAllCars() {
         ResponseEntity<List<CarDTO>> responseEntity;
         responseEntity = carService.findAll();
         return responseEntity;
@@ -38,7 +38,6 @@ public class CarController {
 
     @PostMapping("/rent")
     public ResponseEntity<BookingDTO> rentCar(@RequestParam Long customerId, @RequestParam Long carId) {
-        System.out.println("Controller triggered: customerId=" + customerId + ", carId=" + carId);
         ResponseEntity<BookingDTO> responseEntity;
         responseEntity = carService.rentCar(customerId, carId);
         return responseEntity;

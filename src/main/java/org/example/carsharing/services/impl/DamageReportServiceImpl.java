@@ -1,10 +1,7 @@
 package org.example.carsharing.services.impl;
 
-import org.example.carsharing.dto.CustomerDTO;
 import org.example.carsharing.dto.DamageReportDTO;
-import org.example.carsharing.models.CustomerEntity;
 import org.example.carsharing.models.DamageReportEntity;
-import org.example.carsharing.repositories.CustomerRepository;
 import org.example.carsharing.repositories.DamageReportRepository;
 import org.example.carsharing.services.DamageReportService;
 import org.modelmapper.ModelMapper;
