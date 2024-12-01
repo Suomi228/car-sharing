@@ -5,17 +5,16 @@ public class CustomerDTO {
     private String firstName;
     private String lastName;
     private String number;
-    private String driverLicense;
-
+    private boolean isAdmin;
 
     public CustomerDTO() {};
 
-    public CustomerDTO(long id, String firstName, String lastName, String number, String driverLicense) {
+    public CustomerDTO(long id, String firstName, String lastName, String number, boolean isAdmin) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.number = number;
-        this.driverLicense = driverLicense;
+        this.isAdmin = isAdmin;
     }
 
     public long getId() {
@@ -50,11 +49,11 @@ public class CustomerDTO {
         this.number = number;
     }
 
-    public String getDriverLicense() {
-        return driverLicense;
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setDriverLicense(String driverLicense) {
-        this.driverLicense = driverLicense;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

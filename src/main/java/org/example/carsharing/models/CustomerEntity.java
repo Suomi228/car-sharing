@@ -10,15 +10,15 @@ public class CustomerEntity extends BaseEntity{
     private String firstName;
     private String lastName;
     private String number;
-    private String driverLicense;
+    private boolean isAdmin;
 
     protected CustomerEntity() {}
 
-    protected CustomerEntity(String firstName, String lastName, String number, String driverLicense) {
+    protected CustomerEntity(String firstName, String lastName, String number, boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.number = number;
-        this.driverLicense = driverLicense;
+        this.isAdmin = isAdmin;
     }
     @Column(name = "first_name")
     public String getFirstName() {
@@ -44,12 +44,12 @@ public class CustomerEntity extends BaseEntity{
     public void setNumber(String number) {
         this.number = number;
     }
-    @Column(name = "driver_license")
-    public String getDriverLicense() {
-        return driverLicense;
+    @Column(name = "is_admin")
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setDriverLicense(String driverLicense) {
-        this.driverLicense = driverLicense;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }
