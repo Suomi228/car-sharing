@@ -14,13 +14,6 @@ public class CarDTO {
     private String adress;
     public CarDTO() {};
 
-    public CarStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(CarStatus status) {
-        this.status = status;
-    }
 
     public CarDTO(long id, String name, int year, String number, CarClass carClass, double hourPrice, CarStatus status, String adress) {
         this.id = id;
@@ -79,6 +72,14 @@ public class CarDTO {
 
     public void setCarClass(CarClass carClass) {
         this.carClass = carClass;
+    }
+
+    public CarStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CarStatus status) {
+        this.status = status;
     }
 
     public double getHourPrice() {

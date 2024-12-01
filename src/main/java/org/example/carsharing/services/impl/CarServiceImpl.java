@@ -192,4 +192,41 @@ public class CarServiceImpl implements CarService {
         ResponseEntity<CarDTO> responseEntity = ResponseEntity.ok().body(savedCarDTO);
         return responseEntity;
     }
+
+    @Override
+    public ResponseEntity<CarDTO> updateCar(CarDTO carDTO) {
+        CarEntity carEntity = carRepository.findById(carDTO.getId());
+        if (carEntity == null){
+            throw new RuntimeException("Car not found");
+        };
+        if (carDTO.getName() != null) {
+            carEntity.setName(carDTO.getName());
+        }
+        if (carDTO.getYear() != 0) {
+            carEntity.setYear(carDTO.getYear());
+        }
+        if (carDTO.getNumber() != null) {
+            carEntity.setNumber(carDTO.getNumber());
+        }
+        if (carDTO.getCarClass() != null) {
+            carEntity.setCarClass(carDTO.getCarClass());
+        }
+        if (carDTO.getHourPrice() != 0) {
+            carEntity.setHourPrice(carDTO.getHourPrice());
+        }
+        if (carDTO.getStatus() != null){
+            carEntity.setStatus(carDTO.getStatus());
+        }
+        if (carDTO.getAdress() != null) {
+            carEntity.setAdress(carDTO.getAdress());
+        }
+        try {
+            CarEntity savedCarEntity = carRepository.save(carEntity);
+            CarDTO savedCarDTO = modelMapper.map(savedCarEntity, CarDTO.class);
+            ResponseEntity<CarDTO> responseEntity = ResponseEntity.ok().body(savedCarDTO);
+            return responseEntity;
+        } catch (Exception exception) {
+            throw new RuntimeException("Car was not updated");
+        }
+    }
 }
