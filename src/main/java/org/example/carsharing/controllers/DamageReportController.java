@@ -22,7 +22,7 @@ public class DamageReportController {
         this.damageReportService = damageReportService;
     }
 
-    @GetMapping(path = "/findAll")
+    @GetMapping("/findAll")
     public ResponseEntity<List<DamageReportDTO>> getCustomers() {
         ResponseEntity<List<DamageReportDTO>> responseEntity;
         responseEntity = damageReportService.findAll();

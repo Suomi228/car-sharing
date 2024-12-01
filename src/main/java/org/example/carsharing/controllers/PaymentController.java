@@ -22,7 +22,7 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @GetMapping(path = "/findAll")
+    @GetMapping("/findAll")
     public ResponseEntity<List<PaymentDTO>> getPayments() {
         ResponseEntity<List<PaymentDTO>> responseEntity;
         responseEntity = paymentService.findAll();

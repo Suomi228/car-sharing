@@ -23,7 +23,7 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping(path = "/allCars")
+    @GetMapping( "/allCars")
     public ResponseEntity<List<CarDTO>> getAllCars() {
         ResponseEntity<List<CarDTO>> responseEntity = carService.findAll();
         return responseEntity;

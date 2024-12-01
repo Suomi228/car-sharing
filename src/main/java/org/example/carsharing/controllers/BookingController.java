@@ -20,17 +20,16 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping(path = "/findAll")
+    @GetMapping("/findAll")
     public ResponseEntity<List<BookingDTO>> getBookings() {
         ResponseEntity<List<BookingDTO>> responseEntity;
         responseEntity = bookingService.findAll();
         return responseEntity;
     }
-    @GetMapping(path = "/get/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<List<RentInfoDto>> getBookingsById(@PathVariable("id") Long id) {
         ResponseEntity<List<RentInfoDto>> responseEntity;
         responseEntity = bookingService.findByCustomerId(id);
         return responseEntity;
     }
-
 }

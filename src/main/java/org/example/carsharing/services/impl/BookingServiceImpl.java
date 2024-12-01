@@ -46,7 +46,9 @@ public class BookingServiceImpl implements BookingService {
             dto.setStartDate(booking.getStartDate());
             dto.setEndDate(booking.getEndDate());
             PaymentEntity payment = paymentRepository.findByBookingId(booking.getId());
-            dto.setTotalPrice(payment.getTotalPrice());
+            if (payment != null){
+                dto.setTotalPrice(payment.getTotalPrice());
+            }
             return dto;
         }).toList();
         ResponseEntity<List<RentInfoDto>> responseEntity = ResponseEntity.ok().body(bookingInfoDTOS);
