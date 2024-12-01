@@ -10,10 +10,10 @@ import java.util.List;
 
 @Repository
 public interface CarRepository extends BaseRepository<CarEntity, Long>{
-    List<CarEntity> findByStatus(CarStatus status);
-    List<CarEntity> findByCarClassAndStatus(CarClass carClass, CarStatus carStatus);
-    List<CarEntity> findByCarClass(CarClass carClass);
-    List<CarEntity> findAll();
+    List<CarEntity> findByStatusAndDeletedIsFalse(CarStatus status);
+    List<CarEntity> findByCarClassAndStatusAndDeletedIsFalse(CarClass carClass, CarStatus carStatus);
+    List<CarEntity> findAllByCarClassAndDeletedIsFalse(CarClass carClass);
+    List<CarEntity> findAllByDeletedIsFalse();
     @Query("select c from CarEntity c where c.id = :carId")
     CarEntity findById(Long carId);
 }

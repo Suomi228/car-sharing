@@ -48,7 +48,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public ResponseEntity<List<CarDTO>> findAll() {
-        List<CarEntity> carEntities = carRepository.findAll();
+        List<CarEntity> carEntities = carRepository.findAllByDeletedIsFalse();
         List<CarDTO> carDTOS = carEntities.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
@@ -141,7 +141,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public ResponseEntity<List<CarDTO>> getFreeCars() {
-        List<CarEntity> freeCars = carRepository.findByStatus(CarStatus.FREE);
+        List<CarEntity> freeCars = carRepository.findByStatusAndDeletedIsFalse(CarStatus.FREE);
         List<CarDTO> carDTOS = freeCars.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
@@ -151,7 +151,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(CarClass carClass) {
-        List<CarEntity> freeCars = carRepository.findByCarClassAndStatus(carClass, CarStatus.FREE);
+        List<CarEntity> freeCars = carRepository.findByCarClassAndStatusAndDeletedIsFalse(carClass, CarStatus.FREE);
         List<CarDTO> carDTOS = freeCars.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
@@ -161,7 +161,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public ResponseEntity<List<CarDTO>> getAllCarsByCarClass(CarClass carClass) {
-        List<CarEntity> allCars = carRepository.findByCarClass(carClass);
+        List<CarEntity> allCars = carRepository.findAllByCarClassAndDeletedIsFalse(carClass);
 //        if (allCars.isEmpty()){
 //            throw new IllegalArgumentException("No such car with your carClass");
 //        }
@@ -174,7 +174,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public ResponseEntity<List<CarDTO>> getAllCarsByStatus(CarStatus carStatus) {
-        List<CarEntity> allCars = carRepository.findByStatus(carStatus);
+        List<CarEntity> allCars = carRepository.findByStatusAndDeletedIsFalse(carStatus);
 //        if (allCars.isEmpty()){
 //            throw new IllegalArgumentException("No such car with your status");
 //        }

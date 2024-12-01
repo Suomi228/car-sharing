@@ -28,6 +28,16 @@ public class CarController {
         ResponseEntity<List<CarDTO>> responseEntity = carService.findAll();
         return responseEntity;
     }
+    @GetMapping("/allCarsByCarClass/{carClass}")
+    public ResponseEntity<List<CarDTO>> getAllCarsByCarClass(@PathVariable CarClass carClass) {
+        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByCarClass(carClass);
+        return responseEntity;
+    }
+    @GetMapping("/allCarsByStatus/{carStatus}")
+    public ResponseEntity<List<CarDTO>> getAllCarsByStatus(@PathVariable CarStatus carStatus) {
+        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByStatus(carStatus);
+        return responseEntity;
+    }
     @PutMapping(path = "/updateStatus")
     public ResponseEntity<CarDTO> updateStatus(@RequestParam Long id,@RequestParam CarStatus status) {
         ResponseEntity<CarDTO> responseEntity;
@@ -63,16 +73,7 @@ public class CarController {
         ResponseEntity<List<CarDTO>> responseEntity = carService.getFreeCarsByCarClass(carClass);
         return responseEntity;
     }
-    @GetMapping("/allCarsByCarClass/{carClass}")
-    public ResponseEntity<List<CarDTO>> getAllCarsByCarClass(@PathVariable CarClass carClass) {
-        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByCarClass(carClass);
-        return responseEntity;
-    }
-    @GetMapping("/allCarsByStatus/{carStatus}")
-    public ResponseEntity<List<CarDTO>> getAllCarsByStatus(@PathVariable CarStatus carStatus) {
-        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByStatus(carStatus);
-        return responseEntity;
-    }
+
     @PostMapping("/create")
     public ResponseEntity<CarDTO> createCar(@RequestBody CarDTO carDTO) {
         ResponseEntity<CarDTO> responseEntity = carService.createCar(carDTO);
