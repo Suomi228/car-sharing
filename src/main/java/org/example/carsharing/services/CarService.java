@@ -19,4 +19,5 @@ public interface CarService {
     ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(CarClass carClass);
     ResponseEntity<List<CarDTO>> getAllCarsByCarClass(CarClass carClass);
     ResponseEntity<List<CarDTO>> getAllCarsByStatus(CarStatus carStatus);
+    ResponseEntity<CarDTO> createCar(CarDTO dishItemDTO);
 }

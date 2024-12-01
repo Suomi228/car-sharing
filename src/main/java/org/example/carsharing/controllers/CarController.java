@@ -73,4 +73,9 @@ public class CarController {
         ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByStatus(carStatus);
         return responseEntity;
     }
+    @PostMapping("/create")
+    public ResponseEntity<CarDTO> createCar(@RequestBody CarDTO carDTO) {
+        ResponseEntity<CarDTO> responseEntity = carService.createCar(carDTO);
+        return responseEntity;
+    }
 }

@@ -1,5 +1,6 @@
 package org.example.carsharing.services.impl;
 
+import jakarta.persistence.PersistenceException;
 import org.example.carsharing.constants.BookingStatus;
 import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.constants.CarStatus;
@@ -17,8 +18,10 @@ import org.example.carsharing.repositories.PaymentRepository;
 import org.example.carsharing.services.CarService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -179,6 +182,14 @@ public class CarServiceImpl implements CarService {
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
         ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
+        return responseEntity;
+    }
+
+    public ResponseEntity<CarDTO> createCar(CarDTO carDTO) {
+        CarEntity carEntity = modelMapper.map(carDTO, CarEntity.class);
+        CarEntity savedCarEntity = carRepository.save(carEntity);
+        CarDTO savedCarDTO = modelMapper.map(savedCarEntity, CarDTO.class);
+        ResponseEntity<CarDTO> responseEntity = ResponseEntity.ok().body(savedCarDTO);
         return responseEntity;
     }
 }
