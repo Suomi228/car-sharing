@@ -12,6 +12,7 @@ import java.util.List;
 public interface CarRepository extends BaseRepository<CarEntity, Long>{
     List<CarEntity> findByStatus(CarStatus status);
     List<CarEntity> findByCarClassAndStatus(CarClass carClass, CarStatus carStatus);
+    List<CarEntity> findByCarClass(CarClass carClass);
     List<CarEntity> findAll();
     @Query("select c from CarEntity c where c.id = :carId")
     CarEntity findById(Long carId);

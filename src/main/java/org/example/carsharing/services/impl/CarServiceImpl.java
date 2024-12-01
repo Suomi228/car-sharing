@@ -147,9 +147,35 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public ResponseEntity<List<CarDTO>> findByCarClass(CarClass carClass) {
+    public ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(CarClass carClass) {
         List<CarEntity> freeCars = carRepository.findByCarClassAndStatus(carClass, CarStatus.FREE);
         List<CarDTO> carDTOS = freeCars.stream()
+                .map(car -> modelMapper.map(car, CarDTO.class))
+                .toList();
+        ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
+        return responseEntity;
+    }
+
+    @Override
+    public ResponseEntity<List<CarDTO>> getAllCarsByCarClass(CarClass carClass) {
+        List<CarEntity> allCars = carRepository.findByCarClass(carClass);
+//        if (allCars.isEmpty()){
+//            throw new IllegalArgumentException("No such car with your carClass");
+//        }
+        List<CarDTO> carDTOS = allCars.stream()
+                .map(car -> modelMapper.map(car, CarDTO.class))
+                .toList();
+        ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
+        return responseEntity;
+    }
+
+    @Override
+    public ResponseEntity<List<CarDTO>> getAllCarsByStatus(CarStatus carStatus) {
+        List<CarEntity> allCars = carRepository.findByStatus(carStatus);
+//        if (allCars.isEmpty()){
+//            throw new IllegalArgumentException("No such car with your status");
+//        }
+        List<CarDTO> carDTOS = allCars.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
         ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
