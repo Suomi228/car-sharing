@@ -21,4 +21,5 @@ public interface CarService {
     ResponseEntity<List<CarDTO>> getAllCarsByStatus(CarStatus carStatus);
     ResponseEntity<CarDTO> createCar(CarDTO carDTO);
     ResponseEntity<CarDTO> updateCar(CarDTO carDTO);
+    void deleteCar(Long id);
 }

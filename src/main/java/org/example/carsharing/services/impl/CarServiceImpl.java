@@ -229,4 +229,16 @@ public class CarServiceImpl implements CarService {
             throw new RuntimeException("Car was not updated");
         }
     }
+
+    @Override
+    public void deleteCar(Long id) {
+        CarEntity carEntity = carRepository.findById(id);
+        System.out.println(carEntity + "caras");
+        carEntity.setDeleted(true);
+        try {
+            carRepository.save(carEntity);
+        } catch (Exception exception) {
+            throw new RuntimeException("Car was not deleted");
+        }
+    }
 }

@@ -17,10 +17,20 @@ public class CarEntity extends BaseEntity{
     private double hourPrice;
     private CarStatus status;
     private String adress;
+    private boolean isDeleted;
+
+    @Column(name = "is_deleted")
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
 
     protected CarEntity() {}
 
-    protected CarEntity(double hourPrice, CarClass carClass, String number, int year, String name, CarStatus status, String adress) {
+    protected CarEntity(double hourPrice, CarClass carClass, String number, int year, String name, CarStatus status, String adress, boolean isDeleted) {
         this.hourPrice = hourPrice;
         this.carClass = carClass;
         this.number = number;
@@ -28,6 +38,7 @@ public class CarEntity extends BaseEntity{
         this.name = name;
         this.status=status;
         this.adress = adress;
+        this.isDeleted = false;
     }
     @Column(name = "adress")
     public String getAdress() {

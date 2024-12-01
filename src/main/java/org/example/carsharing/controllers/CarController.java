@@ -83,4 +83,8 @@ public class CarController {
         ResponseEntity<CarDTO> responseEntity = carService.updateCar(carDTO);
         return responseEntity;
     }
+    @DeleteMapping("/delete")
+    public void deleteCar(@RequestParam Long id) {
+        carService.deleteCar(id);
+    }
 }

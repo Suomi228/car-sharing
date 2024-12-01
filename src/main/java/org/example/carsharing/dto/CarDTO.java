@@ -1,5 +1,6 @@
 package org.example.carsharing.dto;
 
+import jakarta.persistence.Column;
 import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.constants.CarStatus;
 
@@ -12,10 +13,18 @@ public class CarDTO {
     private double hourPrice;
     private CarStatus status;
     private String adress;
+    private boolean isDeleted;
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
     public CarDTO() {};
 
-
-    public CarDTO(long id, String name, int year, String number, CarClass carClass, double hourPrice, CarStatus status, String adress) {
+    public CarDTO(long id, String name, int year, String number, CarClass carClass, double hourPrice, CarStatus status, String adress, boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.year = year;
@@ -24,6 +33,7 @@ public class CarDTO {
         this.hourPrice = hourPrice;
         this.status = status;
         this.adress = adress;
+        this.isDeleted = false;
     }
 
     public String getAdress() {
