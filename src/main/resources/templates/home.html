@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Главная страница</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .car-list {
+            margin: 0 auto;
+            width: 80%;
+        }
+
+        .car-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 5px 0;
+        }
+
+        .car-item span {
+            flex: 1;
+            text-align: center;
+        }
+
+        .car-item span:first-child {
+            text-align: left;
+        }
+
+        .car-item span:last-child {
+            text-align: right;
+        }
+
+        .filter-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-form select {
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .filter-form button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Добро пожаловать в Car Sharing!</h1>
+</header>
+
+<section>
+    <div class="filter-form">
+        <form method="get" action="/user/homePage">
+            <label for="carClass">Фильтровать по классу:</label>
+            <select id="carClass" name="carClass">
+                <option value="">Все классы</option>
+                <option th:each="class : ${carClasses}" th:value="${class}" th:text="${class}"></option>
+            </select>
+            <button type="submit">Фильтровать</button>
+        </form>
+    </div>
+
+    <h2 style="text-align: center;">Доступные машины для аренды:</h2>
+    <div class="car-list">
+        <div th:if="${freeCars.isEmpty()}">
+            <p style="text-align: center;">Нет доступных машин.</p>
+        </div>
+        <div class="car-item" th:each="car : ${freeCars}">
+            <span th:text="${car.name}">Название машины</span>
+            <span th:text="${car.carClass}">Класс машины</span>
+            <span th:text="${car.adress}">Адрес машины</span>
+            <span th:text="${car.hourPrice} + ' ₽/час'">Цена</span>
+        </div>
+    </div>
+</section>
+</body>
+</html>
