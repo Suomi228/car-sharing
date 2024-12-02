@@ -14,6 +14,6 @@ public interface CustomerRepository extends BaseRepository<CustomerEntity, Long>
 //    List<CustomerEntity> findByBookingsStatus(String status);
 //    @Query("SELECT ")
     List<CustomerEntity> findAll();
-    @Query("select c from CustomerEntity c where c.id = :carId")
-    CustomerEntity findById(Long carId);
+    @Query("select c from CustomerEntity c where c.id = :customerId")
+    CustomerEntity findById(Long customerId);
 }

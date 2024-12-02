@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface CustomerService {
     ResponseEntity<List<CustomerDTO>> findAll();
+    CustomerDTO findById(Long id);
 }

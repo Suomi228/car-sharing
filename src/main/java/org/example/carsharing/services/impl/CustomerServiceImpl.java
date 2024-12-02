@@ -34,4 +34,11 @@ public class CustomerServiceImpl implements CustomerService {
         ResponseEntity<List<CustomerDTO>> responseEntity = ResponseEntity.ok().body(customerDTOS);
         return responseEntity;
     }
+
+    @Override
+    public CustomerDTO findById(Long id) {
+        CustomerEntity customerEntity = customerRepository.findById(id);
+        CustomerDTO customerDTO = modelMapper.map(customerEntity, CustomerDTO.class);
+        return customerDTO;
+    }
 }

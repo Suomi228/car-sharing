@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои поездки</title>
+</head>
+<body>
+<h1>Мои поездки</h1>
+<div>
+    <h3>Пользователь: <span th:text="${myTrips.base().currentUser()}"></span></h3>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Дата начала</th>
+        <th>Дата конца</th>
+        <th>Название автомобиля</th>
+        <th>Общая стоимость</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trip : ${myTrips.myTrip}">
+        <td th:text="${trip.rentId}"></td>
+        <td th:text="${trip.startDate}"></td>
+        <td th:text="${trip.endDate}"></td>
+        <td th:text="${trip.carName}"></td>
+        <td th:text="${trip.totalPrice}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -27,8 +27,8 @@ public class BookingController {
         return responseEntity;
     }
     @GetMapping("/get/{id}")
-    public ResponseEntity<List<RentInfoDto>> getBookingsById(@PathVariable("id") Long id) {
-        ResponseEntity<List<RentInfoDto>> responseEntity;
+    public List<RentInfoDto> getBookingsById(@PathVariable("id") Long id) {
+        List<RentInfoDto> responseEntity;
         responseEntity = bookingService.findByCustomerId(id);
         return responseEntity;
     }

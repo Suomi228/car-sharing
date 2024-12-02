@@ -1,6 +1,7 @@
 package org.example.carsharing.dto;
 
 public class RentInfoDto {
+    private long rentId;
     private String carName;
     private String startDate;
     private String endDate;
@@ -9,7 +10,17 @@ public class RentInfoDto {
     public RentInfoDto() {
     }
 
-    public RentInfoDto(String carName, String startDate, String endDate, double totalPrice) {
+    public long getRentId() {
+        return rentId;
+    }
+
+    public void setRentId(long rentId) {
+        this.rentId = rentId;
+    }
+
+    public RentInfoDto(long rentId, String carName, String startDate, String endDate, double totalPrice) {
+
+        this.rentId = rentId;
         this.carName = carName;
         this.startDate = startDate;
         this.endDate = endDate;

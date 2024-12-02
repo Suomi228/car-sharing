@@ -38,10 +38,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ResponseEntity<List<RentInfoDto>> findByCustomerId(Long customerId) {
+    public List<RentInfoDto> findByCustomerId(Long customerId) {
         List<BookingEntity> bookingEntities = bookingRepository.findByCustomerId(customerId);
         List<RentInfoDto> bookingInfoDTOS = bookingEntities.stream().map(booking -> {
             RentInfoDto dto = new RentInfoDto();
+            dto.setRentId(booking.getId());
             dto.setCarName(booking.getCar().getName());
             dto.setStartDate(booking.getStartDate());
             dto.setEndDate(booking.getEndDate());
@@ -51,7 +52,7 @@ public class BookingServiceImpl implements BookingService {
             }
             return dto;
         }).toList();
-        ResponseEntity<List<RentInfoDto>> responseEntity = ResponseEntity.ok().body(bookingInfoDTOS);
-        return responseEntity;
+//        ResponseEntity<List<RentInfoDto>> responseEntity = ResponseEntity.ok().body(bookingInfoDTOS);
+        return bookingInfoDTOS;
     }
 }
