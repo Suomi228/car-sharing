@@ -79,9 +79,16 @@ public class UserControllerImpl implements UserController {
         return "home";
     }
 
+    @PostMapping("/rentCar")
     @Override
-    public void rentCar(Long userId, Long carId) {
-
+    public String rentCar(@RequestParam Long customerId, @RequestParam Long carId, RedirectAttributes redirectAttributes) {
+        try {
+            ResponseEntity<BookingDTO> bookingDTOResponseEntity = carService.rentCar(customerId, carId);
+            redirectAttributes.addFlashAttribute("successMessage", "Машина успешно арендована!");
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/user/homePage";
     }
 
     @GetMapping("/{userId}/returnCar")

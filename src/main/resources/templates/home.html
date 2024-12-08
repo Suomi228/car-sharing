@@ -82,6 +82,11 @@
             <span th:text="${car.carClass}">Класс машины</span>
             <span th:text="${car.adress}">Адрес машины</span>
             <span th:text="${car.hourPrice} + ' ₽/час'">Цена</span>
+            <form th:action="@{/user/rentCar}" method="post">
+                <input type="hidden" name="customerId" th:value="${1}">
+                <input type="hidden" name="carId" th:value="${car.id}">
+                <button type="submit">Арендовать</button>
+            </form>
         </div>
     </div>
 </section>
