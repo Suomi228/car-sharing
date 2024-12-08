@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Незавершенные заказы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .order-list {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .order-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .order-item input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 style="text-align: center;">Незавершенные заказы</h1>
+</header>
+
+<section class="order-list">
+    <form th:action="@{/user/returnCar}" method="post" th:if="${returnCarList != null}">
+        <div th:each="order : ${returnCarList.returnCarModels}">
+            <input type="hidden" th:name="carId" th:value="${order.carId}">
+            <input type="hidden" th:name="bookingId" th:value="${order.rentId}">
+            <label th:text="'Автомобиль: ' + ${order.carName}"></label>
+            <input type="text" th:name="carAddress" placeholder="Введите адрес...">
+            <button type="submit">Вернуть машину</button>
+        </div>
+    </form>
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+</section>
+</body>
+</html>

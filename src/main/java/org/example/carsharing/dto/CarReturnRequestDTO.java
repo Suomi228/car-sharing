@@ -1,23 +1,32 @@
 package org.example.carsharing.dto;
 
 public class CarReturnRequestDTO {
-    private Long carId;
-    private Long bookingId;
+    private long carId;
+    private long bookingId;
     private String carAddress;
 
-    public Long getCarId() {
+    public CarReturnRequestDTO() {
+    }
+
+    public CarReturnRequestDTO(long carId, long bookingId, String carAddress) {
+        this.carId = carId;
+        this.bookingId = bookingId;
+        this.carAddress = carAddress;
+    }
+
+    public long getCarId() {
         return carId;
     }
 
-    public void setCarId(Long carId) {
+    public void setCarId(long carId) {
         this.carId = carId;
     }
 
-    public Long getBookingId() {
+    public long getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(Long bookingId) {
+    public void setBookingId(long bookingId) {
         this.bookingId = bookingId;
     }
 

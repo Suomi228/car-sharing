@@ -32,4 +32,9 @@ public class BookingController {
         responseEntity = bookingService.findByCustomerId(id);
         return responseEntity;
     }
+    @GetMapping("/getBookings/{id}")
+    public List<BookingDTO> getBookingsByIdAndEndDateIsNull(@PathVariable("id") Long id) {
+        List<BookingDTO> responseEntity = bookingService.findByCustomerIdWhereEndDateIsNull(id);
+        return responseEntity;
+    }
 }

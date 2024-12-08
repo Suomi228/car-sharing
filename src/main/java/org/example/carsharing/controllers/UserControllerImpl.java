@@ -1,27 +1,21 @@
 package org.example.carsharing.controllers;
 
 import org.example.carsharing.constants.CarClass;
-import org.example.carsharing.dto.CarDTO;
-import org.example.carsharing.dto.CustomerDTO;
+import org.example.carsharing.dto.*;
 import org.example.carsharing.repositories.CustomerRepository;
 import org.example.carsharing.services.CarService;
 import org.example.carsharing.services.CustomerService;
-import org.example.carsharingcontracts.viewModel.OneTripModel;
-import org.example.carsharingcontracts.viewModel.ReturnCarModel;
+import org.example.carsharingcontracts.input.AdressInputModel;
+import org.example.carsharingcontracts.viewModel.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
-import org.example.carsharing.dto.RentInfoDto;
 import org.example.carsharing.services.BookingService;
 import org.example.carsharingcontracts.controllers.UserController;
-import org.example.carsharingcontracts.viewModel.BaseViewModel;
-import org.example.carsharingcontracts.viewModel.MyTripsModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -86,17 +80,53 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public String getCarsByClass(String carClass) {
-        return "";
-    }
-
-    @Override
     public void rentCar(Long userId, Long carId) {
 
     }
 
+    @GetMapping("/{userId}/returnCar")
     @Override
-    public void returnCar(ReturnCarModel returnCarModel) {
+    public String returnCarPage(@PathVariable Long userId, Model model) {
+        List<UnfinishedBookingDTO> unfinishedBookings = bookingService.findUnfinishedBookings(userId);
+        System.out.println(unfinishedBookings);
+        if (unfinishedBookings == null || unfinishedBookings.isEmpty()) {
+            model.addAttribute("errorMessage", "У вас нет незавершенных заказов.");
+            return "returnCar";
+        }
 
+        AdressInputModel addressInput = new AdressInputModel();
+        addressInput.setAdress("");
+
+        List<ReturnCarModel> returnCarModels = unfinishedBookings.stream()
+                .map(booking -> new ReturnCarModel(
+                        new BaseViewModel("Незавершенные заказы", "User Full Name"),
+                        booking.getCarId(),
+                        booking.getBookingId(),
+                        booking.getStartDate(),
+                        booking.getCarName(),
+                        addressInput
+                ))
+                .toList();
+
+        ReturnCarListModel returnCarListModel = new ReturnCarListModel(
+                new BaseViewModel("Незавершенные заказы", "User Full Name"),
+                returnCarModels
+        );
+        System.out.println(returnCarListModel);
+
+        model.addAttribute("returnCarList", returnCarListModel);
+        return "returnCar";
+    }
+
+    @PostMapping("/returnCar")
+
+    public String returnCar(@ModelAttribute CarReturnRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+        try {
+            carService.returnCar(requestDTO.getCarId(), requestDTO.getBookingId(), requestDTO.getCarAddress());
+            redirectAttributes.addFlashAttribute("successMessage", "Машина успешно возвращена!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Ошибка: " + e.getMessage());
+        }
+        return "redirect:/user/1/returnCar";
     }
 }

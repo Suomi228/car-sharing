@@ -2,6 +2,7 @@ package org.example.carsharing.services.impl;
 
 import org.example.carsharing.dto.BookingDTO;
 import org.example.carsharing.dto.RentInfoDto;
+import org.example.carsharing.dto.UnfinishedBookingDTO;
 import org.example.carsharing.models.*;
 import org.example.carsharing.repositories.*;
 import org.example.carsharing.services.BookingService;
@@ -55,4 +56,29 @@ public class BookingServiceImpl implements BookingService {
 //        ResponseEntity<List<RentInfoDto>> responseEntity = ResponseEntity.ok().body(bookingInfoDTOS);
         return bookingInfoDTOS;
     }
+
+    @Override
+    public List<BookingDTO> findByCustomerIdWhereEndDateIsNull(Long customerId) {
+        List<BookingEntity> bookingEntities = bookingRepository.findByCustomerIdAndEndDateIsNull(customerId);
+        List<BookingDTO> bookingDTOS = bookingEntities.stream()
+                .map(booking -> modelMapper.map(booking, BookingDTO.class))
+                .toList();
+        return bookingDTOS;
+    }
+    @Override
+    public List<UnfinishedBookingDTO> findUnfinishedBookings(Long customerId) {
+        List<BookingEntity> unfinishedBookings = bookingRepository.findByCustomerIdAndEndDateIsNull(customerId);
+        return unfinishedBookings.stream()
+                .map(booking -> {
+                    UnfinishedBookingDTO dto = new UnfinishedBookingDTO();
+                    dto.setCarId(booking.getCar().getId());
+                    dto.setBookingId(booking.getId());
+                    dto.setStartDate(booking.getStartDate().toString());
+                    dto.setCarName(booking.getCar().getName());
+                    dto.setCarAddress(booking.getCar().getAdress());
+                    return dto;
+                })
+                .toList();
+    }
+
 }
