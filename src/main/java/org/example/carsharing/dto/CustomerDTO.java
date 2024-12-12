@@ -5,15 +5,17 @@ public class CustomerDTO {
     private String firstName;
     private String lastName;
     private String number;
+    private String password;
     private boolean isAdmin;
 
     public CustomerDTO() {};
 
-    public CustomerDTO(long id, String firstName, String lastName, String number, boolean isAdmin) {
+    public CustomerDTO(long id, String firstName, String lastName, String number, String password, boolean isAdmin) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.number = number;
+        this.password = password;
         this.isAdmin = isAdmin;
     }
 
@@ -49,11 +51,19 @@ public class CustomerDTO {
         this.number = number;
     }
 
-    public boolean getIsAdmin() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

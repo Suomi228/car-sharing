@@ -13,7 +13,7 @@ import java.util.List;
 public interface CarService {
     ResponseEntity<List<CarDTO>> findAll();
     ResponseEntity<CarDTO> updateStatus(Long id, CarStatus carStatus);
-    ResponseEntity<BookingDTO> rentCar(Long customerId, Long carId);
+    ResponseEntity<BookingDTO> rentCar(String number, Long carId);
     ResponseEntity<BookingDTO> returnCar(Long carId, Long bookingId, String carAddress);
     List<CarDTO> getFreeCars();
     ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(CarClass carClass);
@@ -22,4 +22,5 @@ public interface CarService {
     ResponseEntity<CarDTO> createCar(CarDTO carDTO);
     ResponseEntity<CarDTO> updateCar(CarDTO carDTO);
     void deleteCar(Long id);
+    CarDTO getCar (Long id);
 }

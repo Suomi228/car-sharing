@@ -1,22 +1,29 @@
 package org.example.carsharing.controllers;
 
+import jakarta.validation.Valid;
 import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.dto.*;
 import org.example.carsharing.repositories.CustomerRepository;
 import org.example.carsharing.services.CarService;
 import org.example.carsharing.services.CustomerService;
 import org.example.carsharingcontracts.input.AdressInputModel;
+import org.example.carsharingcontracts.input.SignupInputModel;
 import org.example.carsharingcontracts.viewModel.*;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.ui.Model;
 import org.example.carsharing.services.BookingService;
 import org.example.carsharingcontracts.controllers.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -81,13 +88,14 @@ public class UserControllerImpl implements UserController {
 
     @PostMapping("/rentCar")
     @Override
-    public String rentCar(@RequestParam Long customerId, @RequestParam Long carId, RedirectAttributes redirectAttributes) {
+    public String rentCar(Principal principal, @RequestParam Long carId, RedirectAttributes redirectAttributes) {
         try {
-            ResponseEntity<BookingDTO> bookingDTOResponseEntity = carService.rentCar(customerId, carId);
+            ResponseEntity<BookingDTO> bookingDTOResponseEntity = carService.rentCar(principal.getName(), carId);
             redirectAttributes.addFlashAttribute("successMessage", "Машина успешно арендована!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
+        System.out.println(principal + "    " + principal.getName());
         return "redirect:/user/homePage";
     }
 
@@ -135,5 +143,47 @@ public class UserControllerImpl implements UserController {
             redirectAttributes.addFlashAttribute("errorMessage", "Ошибка: " + e.getMessage());
         }
         return "redirect:/user/1/returnCar";
+    }
+
+    @GetMapping("/register")
+    public String showRegisterForm(Model model) {
+        model.addAttribute("signupInputModel", new SignupInputModel());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerUser(@ModelAttribute @Valid SignupInputModel signupInputModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(signupInputModel.getFirstName());
+        customerDTO.setLastName(signupInputModel.getLastName());
+        customerDTO.setNumber(signupInputModel.getNumber());
+        customerDTO.setPassword(signupInputModel.getPassword());
+        customerDTO.setAdmin(false); // Устанавливаем флаг isAdmin в false
+
+        customerService.registerCustomer(customerDTO, signupInputModel.getPassword());
+        UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(signupInputModel.getNumber(), signupInputModel.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+        return "redirect:/user/homePage";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @PostMapping("/login-error")
+    public String onFailedLogin(
+            @ModelAttribute("number") String number,
+            RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("number", number);
+        redirectAttributes.addFlashAttribute("badCredentials", true);
+
+        return "redirect:/users/login";
     }
 }

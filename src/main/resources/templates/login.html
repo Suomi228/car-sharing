@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/user/login}"
+      th:method="post"
+      class="m-md-auto w-50 pb-3">
+    <div class="mb-3">
+        <label class="form-label" for="number">Name</label>
+        <input id="number"
+               name="number"
+               th:value="${number}"
+               type="text" class="form-control text-center"aria-describedby="userNameHelp"/>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input id="password"
+               name="password"
+               type="password" class="form-control text-center" aria-describedby="passwordHelp"/>
+    </div>
+
+    <p class="text-danger" th:if="${badCredentials}">
+        Invalid username or password.
+    </p>
+
+    <button type="submit" class="btn btn-secondary">Login</button>
+</form>
+
+</body>
+</html>

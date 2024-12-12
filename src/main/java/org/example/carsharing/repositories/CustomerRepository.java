@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends BaseRepository<CustomerEntity, Long>{
 //    CustomerEntity findByDriverLicense(String driverLicense);
-//    CustomerEntity findByNumber(String number);
+    Optional<CustomerEntity> findByNumber(String number);
 //    List<CustomerEntity> findByBookingsStatus(String status);
 //    @Query("SELECT ")
     List<CustomerEntity> findAll();

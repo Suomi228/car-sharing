@@ -10,6 +10,7 @@ import org.example.carsharing.services.CustomerService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -18,11 +19,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, ModelMapper modelMapper) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder =passwordEncoder;
     }
 
     @Override
@@ -40,5 +43,16 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerEntity customerEntity = customerRepository.findById(id);
         CustomerDTO customerDTO = modelMapper.map(customerEntity, CustomerDTO.class);
         return customerDTO;
+    }
+    @Override
+    public void registerCustomer(CustomerDTO customerDTO, String rawPassword) {
+        CustomerEntity customer = new CustomerEntity();
+        customer.setFirstName(customerDTO.getFirstName());
+        customer.setLastName(customerDTO.getLastName());
+        customer.setNumber(customerDTO.getNumber());
+        customer.setAdmin(false); // Устанавливаем isAdmin в false
+        customer.setPassword(passwordEncoder.encode(rawPassword));
+
+        customerRepository.save(customer);
     }
 }

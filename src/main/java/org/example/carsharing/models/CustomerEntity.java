@@ -10,14 +10,16 @@ public class CustomerEntity extends BaseEntity{
     private String firstName;
     private String lastName;
     private String number;
+    private String password;
     private boolean isAdmin;
 
-    protected CustomerEntity() {}
+    public CustomerEntity() {}
 
-    protected CustomerEntity(String firstName, String lastName, String number, boolean isAdmin) {
+    public CustomerEntity(String firstName, String lastName, String number, String password, boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.number = number;
+        this.password = password;
         this.isAdmin = isAdmin;
     }
     @Column(name = "first_name")
@@ -44,12 +46,23 @@ public class CustomerEntity extends BaseEntity{
     public void setNumber(String number) {
         this.number = number;
     }
+
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Column(name = "is_admin")
-    public boolean getIsAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
+
 }

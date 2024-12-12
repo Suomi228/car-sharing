@@ -66,14 +66,14 @@ public class CarServiceImpl implements CarService {
         return responseEntity;
     }
     @Override
-    public ResponseEntity<BookingDTO> rentCar(Long customerId, Long carId) {
-        System.out.println("customer" + customerId + " carId " + carId);
+    public ResponseEntity<BookingDTO> rentCar(String number, Long carId) {
+        System.out.println("customer" + number + " carId " + carId);
         CarEntity car = carRepository.findById(carId);
         if (car == null) {
             throw new RuntimeException("No such carId");
         }
 
-        CustomerEntity customer = customerRepository.findById(customerId);
+        CustomerEntity customer = customerRepository.findByNumber(number).orElseThrow();
         if (customer == null) {
             throw new RuntimeException("No such customerId");
         }
@@ -240,5 +240,12 @@ public class CarServiceImpl implements CarService {
         } catch (Exception exception) {
             throw new RuntimeException("Car was not deleted");
         }
+    }
+
+    @Override
+    public CarDTO getCar(Long id) {
+        CarEntity carEntity = carRepository.findById(id);
+        CarDTO savedCarDTO = modelMapper.map(carEntity, CarDTO.class);
+        return savedCarDTO;
     }
 }
