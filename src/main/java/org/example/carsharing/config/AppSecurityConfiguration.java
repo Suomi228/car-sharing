@@ -29,21 +29,21 @@ public class AppSecurityConfiguration {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/favicon.ico").permitAll()
-                        .requestMatchers("/", "/user/login", "/user/register", "/user/login-error").permitAll()
+                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(
                         (formLogin) ->
                                 formLogin.
-                                        loginPage("/user/login").
+                                        loginPage("/auth/login").
                                         usernameParameter("number").
                                         passwordParameter("password").
                                         defaultSuccessUrl("/user/homePage").
-                                        failureForwardUrl("/user/login-error")
+                                        failureForwardUrl("/auth/login-error")
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/user/logout")
+                        .logoutUrl("/auth/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                 )

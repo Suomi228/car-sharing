@@ -146,46 +146,4 @@ public class UserControllerImpl implements UserController {
         }
         return "redirect:/user/returnCar";
     }
-
-    @GetMapping("/register")
-    public String showRegisterForm(Model model) {
-        model.addAttribute("signupInputModel", new SignupInputModel());
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute @Valid SignupInputModel signupInputModel, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "register";
-        }
-
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName(signupInputModel.getFirstName());
-        customerDTO.setLastName(signupInputModel.getLastName());
-        customerDTO.setNumber(signupInputModel.getNumber());
-        customerDTO.setPassword(signupInputModel.getPassword());
-        customerDTO.setAdmin(false);
-
-        customerService.registerCustomer(customerDTO, signupInputModel.getPassword());
-//        UsernamePasswordAuthenticationToken authToken =
-//                new UsernamePasswordAuthenticationToken(signupInputModel.getNumber(), signupInputModel.getPassword());
-//        SecurityContextHolder.getContext().setAuthentication(authToken);
-        return "redirect:/user/homePage";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @PostMapping("/login-error")
-    public String onFailedLogin(
-            @ModelAttribute("number") String number,
-            RedirectAttributes redirectAttributes) {
-
-        redirectAttributes.addFlashAttribute("number", number);
-        redirectAttributes.addFlashAttribute("badCredentials", true);
-
-        return "redirect:/users/login";
-    }
 }

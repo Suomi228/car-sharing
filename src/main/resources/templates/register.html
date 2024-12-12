@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Регистрация</h1>
-<form th:action="@{/user/register}" th:object="${signupInputModel}" method="post">
+<form th:action="@{/auth/register}" th:object="${signupInputModel}" method="post">
     <div>
         <label for="firstName">Имя:</label>
         <input type="text" id="firstName" th:field="*{firstName}" required>
