@@ -55,4 +55,11 @@ public class CustomerServiceImpl implements CustomerService {
 
         customerRepository.save(customer);
     }
+
+    @Override
+    public CustomerDTO findByNumber(String number) {
+        CustomerEntity customerEntity = customerRepository.findByNumber(number).orElseThrow();
+        CustomerDTO customerDTO = modelMapper.map(customerEntity, CustomerDTO.class);
+        return customerDTO;
+    }
 }

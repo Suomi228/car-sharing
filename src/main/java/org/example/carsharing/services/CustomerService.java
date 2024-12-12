@@ -10,4 +10,5 @@ public interface CustomerService {
     ResponseEntity<List<CustomerDTO>> findAll();
     CustomerDTO findById(Long id);
     void registerCustomer(CustomerDTO customerDTO, String rawPassword);
+    CustomerDTO findByNumber(String number);
 }

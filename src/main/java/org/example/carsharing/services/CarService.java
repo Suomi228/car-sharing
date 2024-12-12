@@ -23,4 +23,5 @@ public interface CarService {
     ResponseEntity<CarDTO> updateCar(CarDTO carDTO);
     void deleteCar(Long id);
     CarDTO getCar (Long id);
+
 }

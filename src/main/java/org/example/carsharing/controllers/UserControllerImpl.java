@@ -3,6 +3,7 @@ package org.example.carsharing.controllers;
 import jakarta.validation.Valid;
 import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.dto.*;
+import org.example.carsharing.models.CustomerEntity;
 import org.example.carsharing.repositories.CustomerRepository;
 import org.example.carsharing.services.CarService;
 import org.example.carsharing.services.CustomerService;
@@ -42,10 +43,11 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    @GetMapping("/{id}")
-    public String getMyTrips(@PathVariable Long id, Model model) {
-        List<RentInfoDto> trips = bookingService.findByCustomerId(id);
-        CustomerDTO customerDTO = customerService.findById(id);
+    @GetMapping("/myTrips")
+    public String getMyTrips(Principal principal, Model model) {
+        CustomerDTO customer = customerService.findByNumber(principal.getName());
+        List<RentInfoDto> trips = bookingService.findByCustomerId(customer.getId());
+        CustomerDTO customerDTO = customerService.findById(customer.getId());
         String fullName = customerDTO.getFirstName() + " " + customerDTO.getLastName();
         List<OneTripModel> tripModels = trips.stream()
                 .map(trip -> new OneTripModel(
@@ -165,9 +167,9 @@ public class UserControllerImpl implements UserController {
         customerDTO.setAdmin(false);
 
         customerService.registerCustomer(customerDTO, signupInputModel.getPassword());
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(signupInputModel.getNumber(), signupInputModel.getPassword());
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+//        UsernamePasswordAuthenticationToken authToken =
+//                new UsernamePasswordAuthenticationToken(signupInputModel.getNumber(), signupInputModel.getPassword());
+//        SecurityContextHolder.getContext().setAuthentication(authToken);
         return "redirect:/user/homePage";
     }
 
