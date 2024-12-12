@@ -14,7 +14,7 @@ public interface CarService {
     ResponseEntity<List<CarDTO>> findAll();
     ResponseEntity<CarDTO> updateStatus(Long id, CarStatus carStatus);
     ResponseEntity<BookingDTO> rentCar(String number, Long carId);
-    ResponseEntity<BookingDTO> returnCar(Long carId, Long bookingId, String carAddress);
+    ResponseEntity<BookingDTO> returnCar(String number, Long carId, Long bookingId, String carAddress);
     List<CarDTO> getFreeCars();
     ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(CarClass carClass);
     ResponseEntity<List<CarDTO>> getAllCarsByCarClass(CarClass carClass);

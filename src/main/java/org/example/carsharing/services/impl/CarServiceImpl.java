@@ -102,12 +102,15 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public ResponseEntity<BookingDTO> returnCar(Long carId, Long bookingId, String carAdress) {
+    public ResponseEntity<BookingDTO> returnCar(String number, Long carId, Long bookingId, String carAdress) {
         CarEntity car = carRepository.findById(carId);
-
         BookingEntity booking = bookingRepository.findById(bookingId);
+        CustomerEntity customer = customerRepository.findByNumber(number).orElseThrow();
+        if ((customer.getId() != booking.getCustomer().getId())){
+            throw new IllegalArgumentException("User not right");
+        }
 
-        if (!(booking.getCar().getId() == (carId))) {
+        if (!(booking.getCar().getId() == carId)) {
             throw new IllegalArgumentException("No such booking with this car.");
         }
 

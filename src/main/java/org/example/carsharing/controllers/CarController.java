@@ -58,16 +58,16 @@ public class CarController {
 //        return responseEntity;
 //    }
 
-    @PostMapping("/return")
-    public ResponseEntity<BookingDTO> returnCar(@RequestBody CarReturnRequestDTO requestDTO) {
-        ResponseEntity<BookingDTO> responseEntity;
-        responseEntity = carService.returnCar(
-                requestDTO.getCarId(),
-                requestDTO.getBookingId(),
-                requestDTO.getCarAddress()
-        );
-        return responseEntity;
-    }
+//    @PostMapping("/return")
+//    public ResponseEntity<BookingDTO> returnCar(@RequestBody CarReturnRequestDTO requestDTO) {
+//        ResponseEntity<BookingDTO> responseEntity;
+//        responseEntity = carService.returnCar(
+//                requestDTO.getCarId(),
+//                requestDTO.getBookingId(),
+//                requestDTO.getCarAddress()
+//        );
+//        return responseEntity;
+//    }
 
     @GetMapping("/free")
     public List<CarDTO> getFreeCars() {

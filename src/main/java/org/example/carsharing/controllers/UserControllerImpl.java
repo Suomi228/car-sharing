@@ -135,9 +135,9 @@ public class UserControllerImpl implements UserController {
 
     @PostMapping("/returnCar")
 
-    public String returnCar(@ModelAttribute CarReturnRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+    public String returnCar(Principal principal, @ModelAttribute CarReturnRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
         try {
-            carService.returnCar(requestDTO.getCarId(), requestDTO.getBookingId(), requestDTO.getCarAddress());
+            carService.returnCar(principal.getName(), requestDTO.getCarId(), requestDTO.getBookingId(), requestDTO.getCarAddress());
             redirectAttributes.addFlashAttribute("successMessage", "Машина успешно возвращена!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ошибка: " + e.getMessage());
