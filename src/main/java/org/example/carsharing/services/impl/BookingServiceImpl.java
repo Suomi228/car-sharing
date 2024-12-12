@@ -57,17 +57,17 @@ public class BookingServiceImpl implements BookingService {
         return bookingInfoDTOS;
     }
 
+//    @Override
+//    public List<BookingDTO> findByCustomerIdWhereEndDateIsNull(Long customerId) {
+//        List<BookingEntity> bookingEntities = bookingRepository.findByCustomerNumberAndEndDateIsNull(customerId);
+//        List<BookingDTO> bookingDTOS = bookingEntities.stream()
+//                .map(booking -> modelMapper.map(booking, BookingDTO.class))
+//                .toList();
+//        return bookingDTOS;
+//    }
     @Override
-    public List<BookingDTO> findByCustomerIdWhereEndDateIsNull(Long customerId) {
-        List<BookingEntity> bookingEntities = bookingRepository.findByCustomerIdAndEndDateIsNull(customerId);
-        List<BookingDTO> bookingDTOS = bookingEntities.stream()
-                .map(booking -> modelMapper.map(booking, BookingDTO.class))
-                .toList();
-        return bookingDTOS;
-    }
-    @Override
-    public List<UnfinishedBookingDTO> findUnfinishedBookings(Long customerId) {
-        List<BookingEntity> unfinishedBookings = bookingRepository.findByCustomerIdAndEndDateIsNull(customerId);
+    public List<UnfinishedBookingDTO> findUnfinishedBookings(String number) {
+        List<BookingEntity> unfinishedBookings = bookingRepository.findByCustomerNumberAndEndDateIsNull(number);
         return unfinishedBookings.stream()
                 .map(booking -> {
                     UnfinishedBookingDTO dto = new UnfinishedBookingDTO();

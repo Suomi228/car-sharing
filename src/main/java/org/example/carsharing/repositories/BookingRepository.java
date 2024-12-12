@@ -15,5 +15,5 @@ public interface BookingRepository extends BaseRepository<BookingEntity, Long> {
     List<BookingEntity> findAll();
     @Query("select c from BookingEntity c where c.id = :carId")
     BookingEntity findById(Long carId);
-    List<BookingEntity> findByCustomerIdAndEndDateIsNull(Long customerId);
+    List<BookingEntity> findByCustomerNumberAndEndDateIsNull(String number);
 }

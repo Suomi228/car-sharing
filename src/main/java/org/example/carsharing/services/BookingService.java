@@ -12,6 +12,6 @@ import java.util.List;
 public interface BookingService {
     ResponseEntity<List<BookingDTO>> findAll();
     List<RentInfoDto> findByCustomerId(Long customerId);
-    List<BookingDTO> findByCustomerIdWhereEndDateIsNull(Long customerId);
-    List<UnfinishedBookingDTO> findUnfinishedBookings(Long customerId);
+//    List<BookingDTO> findByCustomerIdWhereEndDateIsNull(Long customerId);
+    List<UnfinishedBookingDTO> findUnfinishedBookings(String number);
 }

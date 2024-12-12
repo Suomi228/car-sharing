@@ -99,10 +99,10 @@ public class UserControllerImpl implements UserController {
         return "redirect:/user/homePage";
     }
 
-    @GetMapping("/{userId}/returnCar")
+    @GetMapping("/returnCar")
     @Override
-    public String returnCarPage(@PathVariable Long userId, Model model) {
-        List<UnfinishedBookingDTO> unfinishedBookings = bookingService.findUnfinishedBookings(userId);
+    public String returnCarPage(Principal principal, Model model) {
+        List<UnfinishedBookingDTO> unfinishedBookings = bookingService.findUnfinishedBookings(principal.getName());
         System.out.println(unfinishedBookings);
         if (unfinishedBookings == null || unfinishedBookings.isEmpty()) {
             model.addAttribute("errorMessage", "У вас нет незавершенных заказов.");
@@ -142,7 +142,7 @@ public class UserControllerImpl implements UserController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ошибка: " + e.getMessage());
         }
-        return "redirect:/user/1/returnCar";
+        return "redirect:/user/returnCar";
     }
 
     @GetMapping("/register")
