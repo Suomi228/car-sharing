@@ -5,6 +5,7 @@ import org.example.carsharing.constants.CarStatus;
 import org.example.carsharing.dto.CarDTO;
 import org.example.carsharing.services.CarService;
 import org.example.carsharingcontracts.controllers.AdminController;
+import org.example.carsharingcontracts.input.CarInputModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,20 +59,39 @@ public class AdminControllerImpl implements AdminController {
     @GetMapping("/editCar/{id}")
     @Override
     public String editCar(@PathVariable("id") Long id, Model model) {
-        CarDTO carDTO = carService.getCar(id);
-        model.addAttribute("car", carDTO);
+        CarDTO car = carService.getCar(id);
+        CarInputModel carInputModel = new CarInputModel();
+        carInputModel.setId(car.getId());
+        carInputModel.setName(car.getName());
+        carInputModel.setYear(car.getYear());
+        carInputModel.setNumber(car.getNumber());
+        carInputModel.setCarClass(car.getCarClass().name());
+        carInputModel.setHourPrice(car.getHourPrice());
+        carInputModel.setStatus(car.getStatus().name());
+        carInputModel.setAdress(car.getAdress());
+
+        model.addAttribute("carInputModel", carInputModel);
         model.addAttribute("carClasses", CarClass.values());
         model.addAttribute("carStatuses", CarStatus.values());
         return "editCar";
     }
+
     @PostMapping("/updateCar")
-//    @Override
-    public String updateCar(CarDTO carDTO) {
+    @Override
+    public String updateCar(@ModelAttribute CarInputModel carInputModel) {
+        CarDTO carDTO = new CarDTO();
+        carDTO.setId(carInputModel.getId());
+        carDTO.setName(carInputModel.getName());
+        carDTO.setYear(carInputModel.getYear());
+        carDTO.setNumber(carInputModel.getNumber());
+        carDTO.setCarClass(CarClass.valueOf(carInputModel.getCarClass().toUpperCase()));
+        carDTO.setHourPrice(carInputModel.getHourPrice());
+        carDTO.setStatus(CarStatus.valueOf(carInputModel.getStatus().toUpperCase()));
+        carDTO.setAdress(carInputModel.getAdress());
+
         carService.updateCar(carDTO);
         return "redirect:/admin/get";
     }
-
-
 
     @PostMapping("/deleteCar/{id}")
     @Override

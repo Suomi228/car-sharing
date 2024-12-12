@@ -5,34 +5,34 @@
 </head>
 <body>
 <h1>Редактирование автомобиля</h1>
-<form th:action="@{/admin/updateCar}" method="post">
-    <input type="hidden" name="id" th:value="${car.id}">
+<form th:action="@{/admin/updateCar}" method="post" th:object="${carInputModel}">
+    <input type="hidden" name="id" th:value="*{id}">
     <label for="name">Название:</label>
-    <input type="text" id="name" name="name" th:value="${car.name}">
+    <input type="text" id="name" name="name" th:value="*{name}">
     <br>
     <label for="year">Год:</label>
-    <input type="number" id="year" name="year" th:value="${car.year}">
+    <input type="number" id="year" name="year" th:value="*{year}">
     <br>
     <label for="number">Номер:</label>
-    <input type="text" id="number" name="number" th:value="${car.number}">
+    <input type="text" id="number" name="number" th:value="*{number}">
     <br>
     <label for="carClass">Класс:</label>
     <select id="carClass" name="carClass">
         <option th:each="class : ${carClasses}" th:value="${class}" th:text="${class}"
-                th:selected="${car.carClass == class}"></option>
+                th:selected="${carClass == class}"></option>
     </select>
     <br>
     <label for="hourPrice">Цена за час:</label>
-    <input type="number" id="hourPrice" name="hourPrice" th:value="${car.hourPrice}">
+    <input type="number" id="hourPrice" name="hourPrice" th:value="*{hourPrice}">
     <br>
     <label for="status">Статус:</label>
     <select id="status" name="status">
-        <option th:each="status : ${carStatuses}" th:value="${status}" th:text="${status}"
-                th:selected="${car.status == status}"></option>
+        <option th:each="Carstatus : ${carStatuses}" th:value="${Carstatus}" th:text="${Carstatus}"
+                th:selected="${status == Carstatus}"></option>
     </select>
     <br>
     <label for="adress">Адрес:</label>
-    <input type="text" id="adress" name="adress" th:value="${car.adress}">
+    <input type="text" id="adress" name="adress" th:value="*{adress}">
     <br>
     <button type="submit">Сохранить</button>
 </form>
