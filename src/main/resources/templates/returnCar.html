@@ -36,9 +36,9 @@
     <form th:action="@{/user/returnCar}" method="post" th:if="${returnCarList != null}">
         <div th:each="order : ${returnCarList.returnCarModels}">
             <input type="hidden" th:name="carId" th:value="${order.carId}">
-            <input type="hidden" th:name="bookingId" th:value="${order.rentId}">
+            <input type="hidden" th:name="rentId" th:value="${order.rentId}">
             <label th:text="'Автомобиль: ' + ${order.carName}"></label>
-            <input type="text" th:name="carAddress" placeholder="Введите адрес...">
+            <input type="text" th:name="adressInputModel.adress" th:value="${order.adressInputModel().adress}" placeholder="Введите адрес...">
             <button type="submit">Вернуть машину</button>
         </div>
     </form>

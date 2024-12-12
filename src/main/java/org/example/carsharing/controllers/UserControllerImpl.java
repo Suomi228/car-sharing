@@ -134,10 +134,10 @@ public class UserControllerImpl implements UserController {
     }
 
     @PostMapping("/returnCar")
-
-    public String returnCar(Principal principal, @ModelAttribute CarReturnRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+    @Override
+    public String returnCar(Principal principal, @ModelAttribute ReturnCarModel returnCarModel, RedirectAttributes redirectAttributes) {
         try {
-            carService.returnCar(principal.getName(), requestDTO.getCarId(), requestDTO.getBookingId(), requestDTO.getCarAddress());
+            carService.returnCar(principal.getName(), returnCarModel.carId(), returnCarModel.rentId(), String.valueOf(returnCarModel.adressInputModel().getAdress()));
             redirectAttributes.addFlashAttribute("successMessage", "Машина успешно возвращена!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ошибка: " + e.getMessage());
@@ -162,7 +162,7 @@ public class UserControllerImpl implements UserController {
         customerDTO.setLastName(signupInputModel.getLastName());
         customerDTO.setNumber(signupInputModel.getNumber());
         customerDTO.setPassword(signupInputModel.getPassword());
-        customerDTO.setAdmin(false); // Устанавливаем флаг isAdmin в false
+        customerDTO.setAdmin(false);
 
         customerService.registerCustomer(customerDTO, signupInputModel.getPassword());
         UsernamePasswordAuthenticationToken authToken =
