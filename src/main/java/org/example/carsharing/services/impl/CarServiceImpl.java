@@ -74,6 +74,14 @@ public class CarServiceImpl implements CarService {
         }
 
         CustomerEntity customer = customerRepository.findByNumber(number).orElseThrow();
+
+        List<BookingEntity> unfinishedBookings = bookingRepository.findByCustomerNumberAndEndDateIsNull(number);
+
+        if (!(unfinishedBookings.isEmpty())){
+            System.out.println("\nsome     " + unfinishedBookings + "    " + "bla lalal");
+            throw new IllegalArgumentException("Вы не можете арендовать больше одной машины");
+        }
+
         if (customer == null) {
             throw new RuntimeException("No such customerId");
         }
