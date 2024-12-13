@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -46,11 +47,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
     @Override
     public void registerCustomer(CustomerDTO customerDTO, String rawPassword) {
+
+        Optional<CustomerEntity> existCustomer = customerRepository.findByNumber(customerDTO.getNumber());
+        if (existCustomer.isPresent()){
+            throw new RuntimeException("number.used");
+        }
+
         CustomerEntity customer = new CustomerEntity();
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
         customer.setNumber(customerDTO.getNumber());
-        customer.setAdmin(false); // Устанавливаем isAdmin в false
+        customer.setAdmin(false);
         customer.setPassword(passwordEncoder.encode(rawPassword));
 
         customerRepository.save(customer);

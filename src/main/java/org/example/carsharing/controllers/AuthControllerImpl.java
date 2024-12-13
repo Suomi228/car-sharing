@@ -32,20 +32,29 @@ public class AuthControllerImpl implements AuthController {
 
     @PostMapping("/register")
     @Override
-    public String register(@ModelAttribute @Valid SignupInputModel signupInputModel, BindingResult bindingResult) {
+    public String register(@ModelAttribute @Valid SignupInputModel signupInputModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "register";
+            redirectAttributes.addFlashAttribute("signupInputModel", signupInputModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.signupInputModel", bindingResult);
+            return "redirect:/auth/register";
         }
 
-        CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstName(signupInputModel.getFirstName());
-        customerDTO.setLastName(signupInputModel.getLastName());
-        customerDTO.setNumber(signupInputModel.getNumber());
-        customerDTO.setPassword(signupInputModel.getPassword());
-        customerDTO.setAdmin(false);
+        try {
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.setFirstName(signupInputModel.getFirstName());
+            customerDTO.setLastName(signupInputModel.getLastName());
+            customerDTO.setNumber(signupInputModel.getNumber());
+            customerDTO.setPassword(signupInputModel.getPassword());
+            customerDTO.setAdmin(false);
 
-        customerService.registerCustomer(customerDTO, signupInputModel.getPassword());
-        return "redirect:/user/homePage";
+            customerService.registerCustomer(customerDTO, signupInputModel.getPassword());
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("signupInputModel", signupInputModel);
+            redirectAttributes.addFlashAttribute("errorMessage", "Номер телефона уже используется.");
+            return "redirect:/auth/register";
+        }
+
+        return "redirect:/auth/login";
     }
 
     @GetMapping("/login")
