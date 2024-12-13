@@ -59,6 +59,6 @@ public class AuthControllerImpl implements AuthController {
     public String onFailedLogin(@ModelAttribute("number") String number, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("number", number);
         redirectAttributes.addFlashAttribute("badCredentials", true);
-        return "redirect:/users/login";
+        return "redirect:/auth/login";
     }
 }
