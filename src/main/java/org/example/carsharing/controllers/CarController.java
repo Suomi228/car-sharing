@@ -30,20 +30,20 @@ public class CarController {
     }
 
     @GetMapping( "/allCars")
-    public ResponseEntity<List<CarDTO>> getAllCars() {
-        ResponseEntity<List<CarDTO>> responseEntity = carService.findAll();
+    public List<CarDTO> getAllCars() {
+        List<CarDTO> responseEntity = carService.findAll();
         return responseEntity;
     }
-    @GetMapping("/allCarsByCarClass/{carClass}")
-    public ResponseEntity<List<CarDTO>> getAllCarsByCarClass(@PathVariable CarClass carClass) {
-        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByCarClass(carClass);
-        return responseEntity;
-    }
-    @GetMapping("/allCarsByStatus/{carStatus}")
-    public ResponseEntity<List<CarDTO>> getAllCarsByStatus(@PathVariable CarStatus carStatus) {
-        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByStatus(carStatus);
-        return responseEntity;
-    }
+//    @GetMapping("/allCarsByCarClass/{carClass}")
+//    public ResponseEntity<List<CarDTO>> getAllCarsByCarClass(@PathVariable CarClass carClass) {
+//        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByCarClass(carClass);
+//        return responseEntity;
+//    }
+//    @GetMapping("/allCarsByStatus/{carStatus}")
+//    public ResponseEntity<List<CarDTO>> getAllCarsByStatus(@PathVariable CarStatus carStatus) {
+//        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByStatus(carStatus);
+//        return responseEntity;
+//    }
     @PutMapping(path = "/updateStatus")
     public ResponseEntity<CarDTO> updateStatus(@RequestParam Long id,@RequestParam CarStatus status) {
         ResponseEntity<CarDTO> responseEntity;
@@ -75,8 +75,8 @@ public class CarController {
         return responseEntity;
     }
     @GetMapping("/free/{carClass}")
-    public ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(@PathVariable CarClass carClass) {
-        ResponseEntity<List<CarDTO>> responseEntity = carService.getFreeCarsByCarClass(carClass);
+    public List<CarDTO> getFreeCarsByCarClass(@PathVariable CarClass carClass) {
+        List<CarDTO> responseEntity = carService.getFreeCarsByCarClass(carClass);
         return responseEntity;
     }
 

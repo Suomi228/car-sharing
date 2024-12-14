@@ -17,7 +17,11 @@ import org.example.carsharing.repositories.CustomerRepository;
 import org.example.carsharing.repositories.PaymentRepository;
 import org.example.carsharing.services.CarService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,8 +33,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
+@EnableCaching
 public class CarServiceImpl implements CarService {
-
     private final CarRepository carRepository;
     private final ModelMapper modelMapper;
     private final CustomerRepository customerRepository;
@@ -47,13 +51,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public ResponseEntity<List<CarDTO>> findAll() {
+    @Cacheable("allCars")
+    public List<CarDTO> findAll() {
         List<CarEntity> carEntities = carRepository.findAllByDeletedIsFalse();
         List<CarDTO> carDTOS = carEntities.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
-        ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
-        return responseEntity;
+        return carDTOS;
     }
 
     @Override
@@ -151,49 +155,43 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Cacheable("freeCars")
     public List<CarDTO> getFreeCars() {
         List<CarEntity> freeCars = carRepository.findByStatusAndDeletedIsFalse(CarStatus.FREE);
         List<CarDTO> carDTOS = freeCars.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
-//        List<CarDTO> responseEntity = ResponseEntity.ok().body(carDTOS);
         return carDTOS;
     }
 
     @Override
-    public ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(CarClass carClass) {
+    @Cacheable("freeCarsByCarClass")
+    public List<CarDTO> getFreeCarsByCarClass(CarClass carClass) {
         List<CarEntity> freeCars = carRepository.findByCarClassAndStatusAndDeletedIsFalse(carClass, CarStatus.FREE);
         List<CarDTO> carDTOS = freeCars.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
-        ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
-        return responseEntity;
+        return carDTOS;
     }
 
     @Override
-    public ResponseEntity<List<CarDTO>> getAllCarsByCarClass(CarClass carClass) {
+    @Cacheable("allCarsByCarClass")
+    public List<CarDTO> getAllCarsByCarClass(CarClass carClass) {
         List<CarEntity> allCars = carRepository.findAllByCarClassAndDeletedIsFalse(carClass);
-//        if (allCars.isEmpty()){
-//            throw new IllegalArgumentException("No such car with your carClass");
-//        }
         List<CarDTO> carDTOS = allCars.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
-        ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
-        return responseEntity;
+        return carDTOS;
     }
 
     @Override
-    public ResponseEntity<List<CarDTO>> getAllCarsByStatus(CarStatus carStatus) {
+    @Cacheable("allCarsByCarStatus")
+    public List<CarDTO> getAllCarsByStatus(CarStatus carStatus) {
         List<CarEntity> allCars = carRepository.findByStatusAndDeletedIsFalse(carStatus);
-//        if (allCars.isEmpty()){
-//            throw new IllegalArgumentException("No such car with your status");
-//        }
         List<CarDTO> carDTOS = allCars.stream()
                 .map(car -> modelMapper.map(car, CarDTO.class))
                 .toList();
-        ResponseEntity<List<CarDTO>> responseEntity = ResponseEntity.ok().body(carDTOS);
-        return responseEntity;
+        return carDTOS;
     }
 
     public ResponseEntity<CarDTO> createCar(CarDTO carDTO) {

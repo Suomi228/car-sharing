@@ -28,21 +28,21 @@ public class AdminControllerImpl implements AdminController {
         List<CarDTO> filteredCars;
 
         if ((carClass == null || carClass.isEmpty()) && (carStatus == null || carStatus.isEmpty())) {
-            filteredCars = carService.findAll().getBody();
+            filteredCars = carService.findAll();
         } else {
             try {
                 if (carClass != null && !carClass.isEmpty() && (carStatus == null || carStatus.isEmpty())) {
                     CarClass carClassEnum = CarClass.valueOf(carClass.toUpperCase());
-                    filteredCars = carService.getAllCarsByCarClass(carClassEnum).getBody();
+                    filteredCars = carService.getAllCarsByCarClass(carClassEnum);
                 }
                 else if (carStatus != null && !carStatus.isEmpty() && (carClass == null || carClass.isEmpty())) {
                     CarStatus carStatusEnum = CarStatus.valueOf(carStatus.toUpperCase());
-                    filteredCars = carService.getAllCarsByStatus(carStatusEnum).getBody();
+                    filteredCars = carService.getAllCarsByStatus(carStatusEnum);
                 }
                 else {
                     CarClass carClassEnum = CarClass.valueOf(carClass.toUpperCase());
                     CarStatus carStatusEnum = CarStatus.valueOf(carStatus.toUpperCase());
-                    List<CarDTO> carsByClass = carService.getAllCarsByCarClass(carClassEnum).getBody();
+                    List<CarDTO> carsByClass = carService.getAllCarsByCarClass(carClassEnum);
                     filteredCars = carsByClass.stream()
                             .filter(car -> car.getStatus().equals(carStatusEnum))
                             .toList();

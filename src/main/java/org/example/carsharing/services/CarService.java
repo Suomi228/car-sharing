@@ -11,14 +11,14 @@ import java.util.List;
 
 @Service
 public interface CarService {
-    ResponseEntity<List<CarDTO>> findAll();
+    List<CarDTO> findAll();
     ResponseEntity<CarDTO> updateStatus(Long id, CarStatus carStatus);
     ResponseEntity<BookingDTO> rentCar(String number, Long carId);
     ResponseEntity<BookingDTO> returnCar(String number, Long carId, Long bookingId, String carAddress);
     List<CarDTO> getFreeCars();
-    ResponseEntity<List<CarDTO>> getFreeCarsByCarClass(CarClass carClass);
-    ResponseEntity<List<CarDTO>> getAllCarsByCarClass(CarClass carClass);
-    ResponseEntity<List<CarDTO>> getAllCarsByStatus(CarStatus carStatus);
+    List<CarDTO> getFreeCarsByCarClass(CarClass carClass);
+    List<CarDTO> getAllCarsByCarClass(CarClass carClass);
+    List<CarDTO> getAllCarsByStatus(CarStatus carStatus);
     ResponseEntity<CarDTO> createCar(CarDTO carDTO);
     ResponseEntity<CarDTO> updateCar(CarDTO carDTO);
     void deleteCar(Long id);

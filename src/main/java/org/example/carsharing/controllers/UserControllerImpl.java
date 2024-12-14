@@ -75,7 +75,7 @@ public class UserControllerImpl implements UserController {
         if (carClass != null && !carClass.isEmpty()) {
             try {
                 CarClass carClassEnum = CarClass.valueOf(carClass.toUpperCase());
-                freeCars = carService.getFreeCarsByCarClass(carClassEnum).getBody();
+                freeCars = carService.getFreeCarsByCarClass(carClassEnum);
             } catch (IllegalArgumentException e) {
                 freeCars = List.of();
             }

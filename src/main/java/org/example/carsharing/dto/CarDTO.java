@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.constants.CarStatus;
 
-public class CarDTO {
+import java.io.Serializable;
+
+public class CarDTO implements Serializable {
     private long id;
     private String name;
     private int year;
