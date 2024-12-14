@@ -76,6 +76,32 @@ public class AdminControllerImpl implements AdminController {
         return "editCar";
     }
 
+    @GetMapping("/create")
+    @Override
+    public String showCreateCarForm(Model model) {
+        model.addAttribute("carInputModel", new CarInputModel());
+        model.addAttribute("carClasses", CarClass.values());
+        model.addAttribute("statuses", CarStatus.values());
+        return "createCar";
+    }
+
+    @PostMapping("/create")
+    @Override
+    public String createCar(@ModelAttribute CarInputModel carInputModel) {
+        CarDTO carDTO = new CarDTO();
+        carDTO.setName(carInputModel.getName());
+        carDTO.setYear(carInputModel.getYear());
+        carDTO.setNumber(carInputModel.getNumber());
+        carDTO.setCarClass(CarClass.valueOf(carInputModel.getCarClass().toUpperCase()));
+        carDTO.setHourPrice(carInputModel.getHourPrice());
+        carDTO.setStatus(CarStatus.valueOf(carInputModel.getStatus().toUpperCase()));
+        carDTO.setAdress(carInputModel.getAdress());
+
+        System.out.println(carDTO + "blablabla");
+        carService.createCar(carDTO);
+        return "redirect:/car/create";
+    }
+
     @PostMapping("/updateCar")
     @Override
     public String updateCar(@ModelAttribute CarInputModel carInputModel) {

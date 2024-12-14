@@ -44,12 +44,12 @@ public class CarController {
 //        ResponseEntity<List<CarDTO>> responseEntity = carService.getAllCarsByStatus(carStatus);
 //        return responseEntity;
 //    }
-    @PutMapping(path = "/updateStatus")
-    public ResponseEntity<CarDTO> updateStatus(@RequestParam Long id,@RequestParam CarStatus status) {
-        ResponseEntity<CarDTO> responseEntity;
-        responseEntity = carService.updateStatus(id, status);
-        return responseEntity;
-    }
+//    @PutMapping(path = "/updateStatus")
+//    public ResponseEntity<CarDTO> updateStatus(@RequestParam Long id,@RequestParam CarStatus status) {
+//        ResponseEntity<CarDTO> responseEntity;
+//        responseEntity = carService.updateStatus(id, status);
+//        return responseEntity;
+//    }
 
 //    @PostMapping("/rent")
 //    public ResponseEntity<BookingDTO> rentCar(@RequestParam Long customerId, @RequestParam Long carId) {
@@ -80,16 +80,16 @@ public class CarController {
         return responseEntity;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<CarDTO> createCar(@RequestBody CarDTO carDTO) {
-        ResponseEntity<CarDTO> responseEntity = carService.createCar(carDTO);
-        return responseEntity;
-    }
-    @PutMapping("/update")
-    public ResponseEntity<CarDTO> updateCar(@RequestBody CarDTO carDTO) {
-        ResponseEntity<CarDTO> responseEntity = carService.updateCar(carDTO);
-        return responseEntity;
-    }
+//    @PostMapping("/create")
+//    public ResponseEntity<CarDTO> createCar(@RequestBody CarDTO carDTO) {
+//        ResponseEntity<CarDTO> responseEntity = carService.createCar(carDTO);
+//        return responseEntity;
+//    }
+//    @PutMapping("/update")
+//    public ResponseEntity<CarDTO> updateCar(@RequestBody CarDTO carDTO) {
+//        ResponseEntity<CarDTO> responseEntity = carService.updateCar(carDTO);
+//        return responseEntity;
+//    }
     @DeleteMapping("/delete")
     public void deleteCar(@RequestParam Long id) {
         carService.deleteCar(id);

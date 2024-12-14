@@ -92,7 +92,7 @@ public class UserControllerImpl implements UserController {
     @Override
     public String rentCar(Principal principal, @RequestParam Long carId, RedirectAttributes redirectAttributes) {
         try {
-            ResponseEntity<BookingDTO> bookingDTOResponseEntity = carService.rentCar(principal.getName(), carId);
+            BookingDTO bookingDTOResponseEntity = carService.rentCar(principal.getName(), carId);
             redirectAttributes.addFlashAttribute("successMessage", "Машина успешно арендована!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());

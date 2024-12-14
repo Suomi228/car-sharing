@@ -62,17 +62,16 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public ResponseEntity<CarDTO> updateStatus(Long id, CarStatus carStatus) {
+    public CarDTO updateStatus(Long id, CarStatus carStatus) {
         CarEntity carEntity = carRepository.findById(id);
         carEntity.changeStatus(carStatus);
         CarEntity savedOrderEntity = carRepository.save(carEntity);
         CarDTO carDTO = modelMapper.map(savedOrderEntity, CarDTO.class);
-        ResponseEntity<CarDTO> responseEntity = ResponseEntity.ok().body(carDTO);
-        return responseEntity;
+        return carDTO;
     }
     @Override
     @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass", "myTrips"}, allEntries = true)
-    public ResponseEntity<BookingDTO> rentCar(String number, Long carId) {
+    public BookingDTO rentCar(String number, Long carId) {
         System.out.println("customer" + number + " carId " + carId);
         CarEntity car = carRepository.findById(carId);
         if (car == null) {
@@ -111,13 +110,12 @@ public class CarServiceImpl implements CarService {
         BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
         bookingDTO.setCarId(car.getId());
         bookingDTO.setCustomerId(customer.getId());
-        ResponseEntity<BookingDTO> responseEntity = ResponseEntity.ok().body(bookingDTO);
-        return responseEntity;
+        return bookingDTO;
     }
 
     @Override
     @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass", "myTrips"}, allEntries = true)
-    public ResponseEntity<BookingDTO> returnCar(String number, Long carId, Long bookingId, String carAdress) {
+    public BookingDTO returnCar(String number, Long carId, Long bookingId, String carAdress) {
         CarEntity car = carRepository.findById(carId);
         BookingEntity booking = bookingRepository.findById(bookingId);
         CustomerEntity customer = customerRepository.findByNumber(number).orElseThrow();
@@ -153,8 +151,7 @@ public class CarServiceImpl implements CarService {
         paymentRepository.save(payment);
 
         BookingDTO bookingDTO = modelMapper.map(booking, BookingDTO.class);
-        ResponseEntity<BookingDTO> responseEntity = ResponseEntity.ok().body(bookingDTO);
-        return responseEntity;
+        return bookingDTO;
     }
 
     @Override
@@ -198,17 +195,16 @@ public class CarServiceImpl implements CarService {
     }
     @Override
     @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass"}, allEntries = true)
-    public ResponseEntity<CarDTO> createCar(CarDTO carDTO) {
+    public CarDTO createCar(CarDTO carDTO) {
         CarEntity carEntity = modelMapper.map(carDTO, CarEntity.class);
         CarEntity savedCarEntity = carRepository.save(carEntity);
         CarDTO savedCarDTO = modelMapper.map(savedCarEntity, CarDTO.class);
-        ResponseEntity<CarDTO> responseEntity = ResponseEntity.ok().body(savedCarDTO);
-        return responseEntity;
+        return savedCarDTO;
     }
 
     @Override
     @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass"}, allEntries = true)
-    public ResponseEntity<CarDTO> updateCar(CarDTO carDTO) {
+    public CarDTO updateCar(CarDTO carDTO) {
         CarEntity carEntity = carRepository.findById(carDTO.getId());
         if (carEntity == null){
             throw new RuntimeException("Car not found");
@@ -237,8 +233,7 @@ public class CarServiceImpl implements CarService {
         try {
             CarEntity savedCarEntity = carRepository.save(carEntity);
             CarDTO savedCarDTO = modelMapper.map(savedCarEntity, CarDTO.class);
-            ResponseEntity<CarDTO> responseEntity = ResponseEntity.ok().body(savedCarDTO);
-            return responseEntity;
+            return savedCarDTO;
         } catch (Exception exception) {
             throw new RuntimeException("Car was not updated");
         }
