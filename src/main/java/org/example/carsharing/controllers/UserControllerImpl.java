@@ -1,26 +1,20 @@
 package org.example.carsharing.controllers;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.carsharing.constants.CarClass;
 import org.example.carsharing.dto.*;
-import org.example.carsharing.models.CustomerEntity;
-import org.example.carsharing.repositories.CustomerRepository;
 import org.example.carsharing.services.CarService;
 import org.example.carsharing.services.CustomerService;
 import org.example.carsharingcontracts.input.AdressInputModel;
-import org.example.carsharingcontracts.input.SignupInputModel;
 import org.example.carsharingcontracts.viewModel.*;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.ui.Model;
 import org.example.carsharing.services.BookingService;
 import org.example.carsharingcontracts.controllers.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,7 +24,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserControllerImpl implements UserController {
-
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private final BookingService bookingService;
     private final CustomerService customerService;
     private final CarService carService;
@@ -45,6 +39,7 @@ public class UserControllerImpl implements UserController {
     @Override
     @GetMapping("/myTrips")
     public String getMyTrips(Principal principal, Model model) {
+        LOG.log(Level.INFO, "show all trips for" + principal.getName());
         CustomerDTO customer = customerService.findByNumber(principal.getName());
         List<RentInfoDto> trips = bookingService.findTripsById(customer.getId());
         CustomerDTO customerDTO = customerService.findById(customer.getId());
@@ -62,12 +57,12 @@ public class UserControllerImpl implements UserController {
         BaseViewModel base = new BaseViewModel("Мои поездки", fullName);
         MyTripsModel myTripsModel = new MyTripsModel(base, tripModels);
         model.addAttribute("myTrips", myTripsModel);
-
+        logSample("GET", "getMyTrips", principal.getName(), "Мои поездки");
         return "myTrips";
     }
     @Override
     @GetMapping("/homePage")
-    public String homePage(@RequestParam(value = "carClass", required = false) String carClass, Model model) {
+    public String homePage(@RequestParam(value = "carClass", required = false) String carClass, Model model, Principal principal) {
         List<CarDTO> freeCars;
         if (carClass != null && carClass.isEmpty()) {
             return "redirect:/user/homePage";
@@ -85,6 +80,7 @@ public class UserControllerImpl implements UserController {
 
         model.addAttribute("freeCars", freeCars);
         model.addAttribute("carClasses", CarClass.values());
+        logSample("GET", "homePage", principal.getName(), "Домашняя страница");
         return "home";
     }
 
@@ -92,12 +88,14 @@ public class UserControllerImpl implements UserController {
     @Override
     public String rentCar(Principal principal, @RequestParam Long carId, RedirectAttributes redirectAttributes) {
         try {
-            BookingDTO bookingDTOResponseEntity = carService.rentCar(principal.getName(), carId);
+            carService.rentCar(principal.getName(), carId);
             redirectAttributes.addFlashAttribute("successMessage", "Машина успешно арендована!");
+            logSample("POST", "rentCar", principal.getName(),"Машина успешно арендована!");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            logSample("POST", "rentCar", principal.getName(),e.getMessage());
         }
-        System.out.println(principal + "    " + principal.getName());
+
         return "redirect:/user/homePage";
     }
 
@@ -108,6 +106,7 @@ public class UserControllerImpl implements UserController {
         System.out.println(unfinishedBookings);
         if (unfinishedBookings == null || unfinishedBookings.isEmpty()) {
             model.addAttribute("errorMessage", "У вас нет незавершенных заказов.");
+            logSample("GET", "returnCarPage", principal.getName(), "У вас нет незавершенных заказов.");
             return "returnCar";
         }
 
@@ -116,7 +115,7 @@ public class UserControllerImpl implements UserController {
 
         List<ReturnCarModel> returnCarModels = unfinishedBookings.stream()
                 .map(booking -> new ReturnCarModel(
-                        new BaseViewModel("Незавершенные заказы", "User Full Name"),
+                        new BaseViewModel("Незавершенные заказы", principal.getName()),
                         booking.getCarId(),
                         booking.getBookingId(),
                         booking.getStartDate(),
@@ -126,12 +125,12 @@ public class UserControllerImpl implements UserController {
                 .toList();
 
         ReturnCarListModel returnCarListModel = new ReturnCarListModel(
-                new BaseViewModel("Незавершенные заказы", "User Full Name"),
+                new BaseViewModel("Незавершенные заказы", principal.getName()),
                 returnCarModels
         );
         System.out.println(returnCarListModel);
-
         model.addAttribute("returnCarList", returnCarListModel);
+        logSample("GET", "returnCarPage", principal.getName(), "Страница незавершенных заказов");
         return "returnCar";
     }
 
@@ -141,9 +140,16 @@ public class UserControllerImpl implements UserController {
         try {
             carService.returnCar(principal.getName(), returnCarModel.carId(), returnCarModel.rentId(), String.valueOf(returnCarModel.adressInputModel().getAdress()));
             redirectAttributes.addFlashAttribute("successMessage", "Машина успешно возвращена!");
+            logSample("POST", "returnCar", principal.getName(), "Машина успешно возвращена!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ошибка: " + e.getMessage());
+            logSample("POST", "returnCar", principal.getName(), e.getMessage());
         }
+
         return "redirect:/user/returnCar";
+    }
+    private void logSample(String requestType, String methodName, String username, String message) {
+        LOG.log(Level.INFO, "Request Time: {}, Request Type: {}, Method: {}, Username: {}, Message: {}",
+                java.time.LocalDateTime.now(), requestType, methodName, username, message);
     }
 }

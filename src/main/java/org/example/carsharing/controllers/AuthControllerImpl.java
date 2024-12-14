@@ -1,6 +1,9 @@
 package org.example.carsharing.controllers;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.carsharing.dto.CustomerDTO;
 import org.example.carsharing.services.CustomerService;
 import org.example.carsharingcontracts.controllers.AuthController;
@@ -19,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/auth")
 public class AuthControllerImpl implements AuthController {
     private final CustomerService customerService;
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     public AuthControllerImpl(CustomerService customerService) {
         this.customerService = customerService;
@@ -36,6 +40,7 @@ public class AuthControllerImpl implements AuthController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("signupInputModel", signupInputModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.signupInputModel", bindingResult);
+            logSample("POST", "register", signupInputModel.getNumber(), "Ошибки в биндинге");
             return "redirect:/auth/register";
         }
 
@@ -48,9 +53,11 @@ public class AuthControllerImpl implements AuthController {
             customerDTO.setAdmin(false);
 
             customerService.registerCustomer(customerDTO, signupInputModel.getPassword());
+            logSample("POST", "register", signupInputModel.getNumber(), "Зарегистрировался");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("signupInputModel", signupInputModel);
             redirectAttributes.addFlashAttribute("errorMessage", "Номер телефона уже используется.");
+            logSample("POST", "register", signupInputModel.getNumber(), "Номер телефона уже используется.");
             return "redirect:/auth/register";
         }
 
@@ -68,6 +75,12 @@ public class AuthControllerImpl implements AuthController {
     public String onFailedLogin(@ModelAttribute("number") String number, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("number", number);
         redirectAttributes.addFlashAttribute("badCredentials", true);
+        logSample("POST", "onFailedLogin", number, "Не удалось войти");
         return "redirect:/auth/login";
+    }
+
+    private void logSample(String requestType, String methodName, String username, String message) {
+        LOG.log(Level.INFO, "Request Time: {}, Request Type: {}, Method: {}, Username: {}, Message: {}",
+                java.time.LocalDateTime.now(), requestType, methodName, username, message);
     }
 }
