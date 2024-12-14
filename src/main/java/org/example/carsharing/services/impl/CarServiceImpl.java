@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.dao.DataAccessException;
@@ -70,6 +71,7 @@ public class CarServiceImpl implements CarService {
         return responseEntity;
     }
     @Override
+    @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass", "myTrips"}, allEntries = true)
     public ResponseEntity<BookingDTO> rentCar(String number, Long carId) {
         System.out.println("customer" + number + " carId " + carId);
         CarEntity car = carRepository.findById(carId);
@@ -114,6 +116,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass", "myTrips"}, allEntries = true)
     public ResponseEntity<BookingDTO> returnCar(String number, Long carId, Long bookingId, String carAdress) {
         CarEntity car = carRepository.findById(carId);
         BookingEntity booking = bookingRepository.findById(bookingId);
@@ -193,7 +196,8 @@ public class CarServiceImpl implements CarService {
                 .toList();
         return carDTOS;
     }
-
+    @Override
+    @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass"}, allEntries = true)
     public ResponseEntity<CarDTO> createCar(CarDTO carDTO) {
         CarEntity carEntity = modelMapper.map(carDTO, CarEntity.class);
         CarEntity savedCarEntity = carRepository.save(carEntity);
@@ -203,6 +207,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass"}, allEntries = true)
     public ResponseEntity<CarDTO> updateCar(CarDTO carDTO) {
         CarEntity carEntity = carRepository.findById(carDTO.getId());
         if (carEntity == null){
@@ -240,6 +245,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @CacheEvict(value = {"allCars", "freeCars", "freeCarsByCarClass", "allCarsByCarStatus", "allCarsByCarClass"}, allEntries = true)
     public void deleteCar(Long id) {
         CarEntity carEntity = carRepository.findById(id);
         System.out.println(carEntity + "caras");

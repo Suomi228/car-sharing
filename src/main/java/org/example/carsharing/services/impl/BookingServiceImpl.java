@@ -8,13 +8,14 @@ import org.example.carsharing.repositories.*;
 import org.example.carsharing.services.BookingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
@@ -39,6 +40,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Cacheable("myTrips")
     public List<RentInfoDto> findByCustomerId(Long customerId) {
         List<BookingEntity> bookingEntities = bookingRepository.findByCustomerId(customerId);
         List<RentInfoDto> bookingInfoDTOS = bookingEntities.stream().map(booking -> {
@@ -53,18 +55,9 @@ public class BookingServiceImpl implements BookingService {
             }
             return dto;
         }).toList();
-//        ResponseEntity<List<RentInfoDto>> responseEntity = ResponseEntity.ok().body(bookingInfoDTOS);
         return bookingInfoDTOS;
     }
 
-//    @Override
-//    public List<BookingDTO> findByCustomerIdWhereEndDateIsNull(Long customerId) {
-//        List<BookingEntity> bookingEntities = bookingRepository.findByCustomerNumberAndEndDateIsNull(customerId);
-//        List<BookingDTO> bookingDTOS = bookingEntities.stream()
-//                .map(booking -> modelMapper.map(booking, BookingDTO.class))
-//                .toList();
-//        return bookingDTOS;
-//    }
     @Override
     public List<UnfinishedBookingDTO> findUnfinishedBookings(String number) {
         List<BookingEntity> unfinishedBookings = bookingRepository.findByCustomerNumberAndEndDateIsNull(number);
