@@ -1,6 +1,8 @@
 package org.example.carsharing.dto;
 
-public class RentInfoDto {
+import java.io.Serializable;
+
+public class RentInfoDto implements Serializable {
     private long rentId;
     private String carName;
     private String startDate;

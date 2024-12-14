@@ -20,18 +20,18 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping("/findAll")
-    public ResponseEntity<List<BookingDTO>> getBookings() {
-        ResponseEntity<List<BookingDTO>> responseEntity;
-        responseEntity = bookingService.findAll();
-        return responseEntity;
-    }
-    @GetMapping("/get/{id}")
-    public List<RentInfoDto> getBookingsById(@PathVariable("id") Long id) {
-        List<RentInfoDto> responseEntity;
-        responseEntity = bookingService.findByCustomerId(id);
-        return responseEntity;
-    }
+//    @GetMapping("/findAll")
+//    public ResponseEntity<List<BookingDTO>> getBookings() {
+//        ResponseEntity<List<BookingDTO>> responseEntity;
+//        responseEntity = bookingService.findAll();
+//        return responseEntity;
+//    }
+//    @GetMapping("/get/{id}")
+//    public List<RentInfoDto> getBookingsById(@PathVariable("id") Long id) {
+//        List<RentInfoDto> responseEntity;
+//        responseEntity = bookingService.findByCustomerId(id);
+//        return responseEntity;
+//    }
 //    @GetMapping("/getBookings/{id}")
 //    public List<BookingDTO> getBookingsByIdAndEndDateIsNull(@PathVariable("id") Long id) {
 //        List<BookingDTO> responseEntity = bookingService.findByCustomerIdWhereEndDateIsNull(id);

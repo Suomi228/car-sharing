@@ -30,18 +30,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ResponseEntity<List<BookingDTO>> findAll() {
+    public List<BookingDTO> findAll() {
         List<BookingEntity> bookingEntities = bookingRepository.findAll();
         List<BookingDTO> bookingDTOS = bookingEntities.stream()
                 .map(booking -> modelMapper.map(booking, BookingDTO.class))
                 .toList();
-        ResponseEntity<List<BookingDTO>> responseEntity = ResponseEntity.ok().body(bookingDTOS);
-        return responseEntity;
+        return bookingDTOS;
     }
 
     @Override
     @Cacheable("myTrips")
-    public List<RentInfoDto> findByCustomerId(Long customerId) {
+    public List<RentInfoDto> findTripsById(Long customerId) {
         List<BookingEntity> bookingEntities = bookingRepository.findByCustomerId(customerId);
         List<RentInfoDto> bookingInfoDTOS = bookingEntities.stream().map(booking -> {
             RentInfoDto dto = new RentInfoDto();
@@ -73,5 +72,4 @@ public class BookingServiceImpl implements BookingService {
                 })
                 .toList();
     }
-
 }

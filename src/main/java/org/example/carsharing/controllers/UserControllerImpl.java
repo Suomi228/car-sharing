@@ -46,7 +46,7 @@ public class UserControllerImpl implements UserController {
     @GetMapping("/myTrips")
     public String getMyTrips(Principal principal, Model model) {
         CustomerDTO customer = customerService.findByNumber(principal.getName());
-        List<RentInfoDto> trips = bookingService.findByCustomerId(customer.getId());
+        List<RentInfoDto> trips = bookingService.findTripsById(customer.getId());
         CustomerDTO customerDTO = customerService.findById(customer.getId());
         String fullName = customerDTO.getFirstName() + " " + customerDTO.getLastName();
         List<OneTripModel> tripModels = trips.stream()
