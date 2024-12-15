@@ -6,7 +6,7 @@
     <title>Мои поездки</title>
 </head>
 <body>
-<h1>Мои поездки</h1>
+<div th:replace="fragments/header">Navbar</div>
 <div>
     <h3>Пользователь: <span th:text="${myTrips.base().currentUser()}"></span></h3>
 </div>

@@ -31,6 +31,7 @@ public class AppSecurityConfiguration {
                         .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("user/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(

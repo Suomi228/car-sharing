@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Создать машину</title>
-</head>
+<div th:replace="fragments/header">Navbar</div>
 <body>
 <h1>Создать новую машину</h1>
 <form th:action="@{/car/create}" method="post" th:object="${carInputModel}">

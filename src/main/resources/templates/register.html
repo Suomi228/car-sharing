@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Регистрация</title>
-</head>
+<div th:replace="fragments/header">Navbar</div>
 <body>
 <h1>Регистрация</h1>
 <form th:action="@{/auth/register}" th:object="${signupInputModel}" method="post">
