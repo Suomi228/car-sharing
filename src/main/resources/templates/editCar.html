@@ -9,13 +9,13 @@
 <form th:action="@{/admin/updateCar}" method="post" th:object="${carInputModel}">
     <input type="hidden" name="id" th:value="*{id}">
     <label for="name">Название:</label>
-    <input type="text" id="name" name="name" th:value="*{name}">
+    <input type="text" id="name" name="name" th:value="*{name}" required>
     <br>
     <label for="year">Год:</label>
-    <input type="number" id="year" name="year" th:value="*{year}">
+    <input type="number" id="year" name="year" th:value="*{year}" required>
     <br>
     <label for="number">Номер:</label>
-    <input type="text" id="number" name="number" th:value="*{number}">
+    <input type="text" id="number" name="number" th:value="*{number}" required>
     <br>
     <label for="carClass">Класс:</label>
     <select id="carClass" name="carClass">
@@ -24,7 +24,7 @@
     </select>
     <br>
     <label for="hourPrice">Цена за час:</label>
-    <input type="number" id="hourPrice" name="hourPrice" th:value="*{hourPrice}">
+    <input type="number" id="hourPrice" name="hourPrice" th:value="*{hourPrice}" required>
     <br>
     <label for="status">Статус:</label>
     <select id="status" name="status">
@@ -33,11 +33,10 @@
     </select>
     <br>
     <label for="adress">Адрес:</label>
-    <input type="text" id="adress" name="adress" th:value="*{adress}">
+    <input type="text" id="adress" name="adress" th:value="*{adress}" required>
     <br>
     <button type="submit">Сохранить</button>
 </form>
-
 
 </body>
 </html>
