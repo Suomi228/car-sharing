@@ -110,7 +110,7 @@ public class AdminControllerImpl implements AdminController {
         } catch (Exception e) {
             logSample("POST", "createCar", principal.getName(), e.getMessage());
         }
-        return "redirect:/car/create";
+        return "redirect:/admin/create";
     }
 
     @PostMapping("/updateCar")

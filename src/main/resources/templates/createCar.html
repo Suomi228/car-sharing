@@ -15,7 +15,7 @@
 <div th:replace="fragments/header">Navbar</div>
 <body>
 <h1>Создание автомобиля</h1>
-<form th:action="@{/car/create}" method="post" th:object="${carInputModel}">
+<form th:action="@{/admin/create}" method="post" th:object="${carInputModel}">
     <label for="name">Название:</label>
     <input type="text" id="name" th:field="*{name}" placeholder="Введите название" required><br><br>
 
