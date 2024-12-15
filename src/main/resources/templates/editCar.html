@@ -3,6 +3,7 @@
 <head>
     <title>Редактировать автомобиль</title>
 </head>
+<div th:replace="fragments/header">Navbar</div>
 <body>
 <h1>Редактирование автомобиля</h1>
 <form th:action="@{/admin/updateCar}" method="post" th:object="${carInputModel}">
