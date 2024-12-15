@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -19,9 +20,11 @@ import org.springframework.security.web.context.SecurityContextRepository;
 public class AppSecurityConfiguration {
 
     private final CustomerRepository customerRepository;
+    private final AuthenticationSuccessHandler successHandler;
 
-    public AppSecurityConfiguration(CustomerRepository customerRepository) {
+    public AppSecurityConfiguration(CustomerRepository customerRepository, AuthenticationSuccessHandler successHandler) {
         this.customerRepository = customerRepository;
+        this.successHandler = successHandler;
     }
 
     @Bean
@@ -40,7 +43,7 @@ public class AppSecurityConfiguration {
                                         loginPage("/auth/login").
                                         usernameParameter("number").
                                         passwordParameter("password").
-                                        defaultSuccessUrl("/user/homePage").
+                                        successHandler(successHandler).
                                         failureForwardUrl("/auth/login-error")
                 )
                 .logout(logout -> logout
