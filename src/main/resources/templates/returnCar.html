@@ -39,7 +39,7 @@
             <input type="hidden" th:name="carId" th:value="${order.carId}">
             <input type="hidden" th:name="rentId" th:value="${order.rentId}">
             <label th:text="'Автомобиль: ' + ${order.carName}"></label>
-            <input type="text" th:name="adressInputModel.adress" th:value="${order.adressInputModel().adress}" placeholder="Введите адрес...">
+            <input type="text" th:name="adressInputModel.adress" th:value="${order.adressInputModel().adress}" placeholder="Введите адрес..." required>
             <button type="submit">Вернуть машину</button>
         </div>
     </form>
