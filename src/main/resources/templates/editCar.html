@@ -2,6 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Редактировать автомобиль</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <div th:replace="fragments/header">Navbar</div>
 <body>
@@ -12,7 +21,7 @@
     <input type="text" id="name" name="name" th:value="*{name}" required>
     <br>
     <label for="year">Год:</label>
-    <input type="number" id="year" name="year" th:value="*{year}" required>
+    <input type="number" id="year" name="year" th:value="*{year}" min="1980" required>
     <br>
     <label for="number">Номер:</label>
     <input type="text" id="number" name="number" th:value="*{number}" required>
@@ -24,7 +33,7 @@
     </select>
     <br>
     <label for="hourPrice">Цена за час:</label>
-    <input type="number" id="hourPrice" name="hourPrice" th:value="*{hourPrice}" required>
+    <input type="number" id="hourPrice" name="hourPrice" th:value="*{hourPrice}" min="200" required>
     <br>
     <label for="status">Статус:</label>
     <select id="status" name="status">

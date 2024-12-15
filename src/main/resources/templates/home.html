@@ -6,6 +6,9 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
         }
 
         header {
@@ -13,50 +16,79 @@
             margin-bottom: 20px;
         }
 
-        .car-list {
-            margin: 0 auto;
-            width: 80%;
-        }
-
-        .car-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #ddd;
-            padding: 5px 0;
-        }
-
-        .car-item span {
-            flex: 1;
-            text-align: center;
-        }
-
-        .car-item span:first-child {
-            text-align: left;
-        }
-
-        .car-item span:last-child {
-            text-align: right;
-        }
-
         .filter-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-form form {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-form label {
+            margin: 0;
+        }
+        .filter-form select,
+        .filter-form button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .message {
             text-align: center;
             margin-bottom: 20px;
         }
 
-        .filter-form select {
-            padding: 5px;
-            font-size: 16px;
+        .error {
+            color: red;
         }
 
-        .filter-form button {
+        .success {
+            color: green;
+        }
+
+        .car-table {
+            margin: 0 auto;
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        .car-table th, .car-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .car-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .car-table caption {
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .rent-button {
             padding: 5px 10px;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
         }
     </style>
 </head>
 <body>
 <div th:replace="fragments/header">Navbar</div>
+
+<div class="message">
+    <div th:if="${errorMessage}" class="error" th:text="${errorMessage}"></div>
+    <div th:if="${successMessage}" class="success" th:text="${successMessage}"></div>
+</div>
 
 <section>
     <div class="filter-form">
@@ -68,25 +100,42 @@
             </select>
             <button type="submit">Фильтровать</button>
         </form>
+        <a href="/user/homePage">
+            <button type="button">Очистить фильтры</button>
+        </a>
     </div>
 
     <h2 style="text-align: center;">Доступные машины для аренды:</h2>
-    <div class="car-list">
-        <div th:if="${freeCars.isEmpty()}">
-            <p style="text-align: center;">Нет доступных машин.</p>
-        </div>
-        <div class="car-item" th:each="car : ${freeCars}">
-            <span th:text="${car.name}">Название машины</span>
-            <span th:text="${car.carClass}">Класс машины</span>
-            <span th:text="${car.adress}">Адрес машины</span>
-            <span th:text="${car.hourPrice} + ' ₽/час'">Цена</span>
-            <form th:action="@{/user/rentCar}" method="post">
-                <input type="hidden" name="customerId" th:value="${1}">
-                <input type="hidden" name="carId" th:value="${car.id}">
-                <button type="submit">Арендовать</button>
-            </form>
-        </div>
-    </div>
+    <table class="car-table">
+        <caption>Список доступных машин</caption>
+        <thead>
+        <tr>
+            <th>Название машины</th>
+            <th>Класс</th>
+            <th>Адрес</th>
+            <th>Цена (₽/час)</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${freeCars.isEmpty()}">
+            <td colspan="5" style="text-align: center;">Нет доступных машин.</td>
+        </tr>
+        <tr th:each="car : ${freeCars}">
+            <td th:text="${car.name}">Название машины</td>
+            <td th:text="${car.carClass}">Класс</td>
+            <td th:text="${car.adress}">Адрес</td>
+            <td th:text="${car.hourPrice} + ' ₽/час'">Цена</td>
+            <td>
+                <form th:action="@{/user/rentCar}" method="post">
+                    <input type="hidden" name="customerId" th:value="${1}">
+                    <input type="hidden" name="carId" th:value="${car.id}">
+                    <button type="submit" class="rent-button">Арендовать</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </section>
 </body>
 </html>

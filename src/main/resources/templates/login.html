@@ -1,35 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #0073e6;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        form {
+            width: 90%;
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: #0073e6;
+            outline: none;
+            box-shadow: 0 0 4px rgba(0, 115, 230, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: gray;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: lightgrey;
+        }
+
+        .text-danger {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
 </head>
-<div th:replace="fragments/header">Navbar</div>
 <body>
-<form th:action="@{/auth/login}"
-      th:method="post"
-      class="m-md-auto w-50 pb-3">
-    <div class="mb-3">
-        <label class="form-label" for="number">Name</label>
+<div th:replace="fragments/header">Navbar</div>
+
+<h1>Вход</h1>
+<form th:action="@{/auth/login}" th:method="post">
+    <div>
+        <label for="number">Логин:</label>
         <input id="number"
                name="number"
                th:value="${number}"
-               type="text" class="form-control text-center" aria-describedby="userNameHelp"/>
+               type="text"
+               required
+               placeholder="Введите ваше имя">
     </div>
 
-    <div class="mb-3">
-        <label class="form-label" for="password">Password</label>
+    <div>
+        <label for="password">Пароль:</label>
         <input id="password"
                name="password"
-               type="password" class="form-control text-center" aria-describedby="passwordHelp"/>
+               type="password"
+               required
+               placeholder="Введите ваш пароль">
     </div>
 
     <p class="text-danger" th:if="${badCredentials}">
-        Invalid username or password.
+        Неверный логин или пароль.
     </p>
 
-    <button type="submit" class="btn btn-secondary">Login</button>
+    <button type="submit">Войти</button>
 </form>
-
 </body>
 </html>

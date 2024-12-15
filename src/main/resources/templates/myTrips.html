@@ -4,11 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мои поездки</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #0073e6;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        h3 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 90%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table thead {
+            background-color: gray;
+            color: white;
+        }
+
+        table thead th {
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        table tbody td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        table tbody tr:hover {
+            background-color: lightgrey;
+        }
+
+        .no-trips {
+            text-align: center;
+            margin: 20px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments/header">Navbar</div>
+
 <div>
-    <h3>Пользователь: <span th:text="${myTrips.base().currentUser()}"></span></h3>
+    <h3>Пользователь: <span th:text="${myTrips.base().currentUser()}">Имя пользователя</span></h3>
 </div>
 
 <table>
@@ -23,11 +86,14 @@
     </thead>
     <tbody>
     <tr th:each="trip : ${myTrips.myTrip}">
-        <td th:text="${trip.rentId}"></td>
-        <td th:text="${trip.startDate}"></td>
-        <td th:text="${trip.endDate}"></td>
-        <td th:text="${trip.carName}"></td>
-        <td th:text="${trip.totalPrice}"></td>
+        <td th:text="${trip.rentId}">1</td>
+        <td th:text="${trip.startDate}">2024-01-01</td>
+        <td th:text="${trip.endDate}">2024-01-05</td>
+        <td th:text="${trip.carName}">Toyota Camry</td>
+        <td th:text="${trip.totalPrice + ' ₽'}">5000 ₽</td>
+    </tr>
+    <tr th:if="${myTrips.myTrip.isEmpty()}">
+        <td colspan="5" class="no-trips">Вы еще не совершали поездки.</td>
     </tr>
     </tbody>
 </table>

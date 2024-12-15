@@ -9,14 +9,35 @@
             text-align: center;
         }
 
-        .header a {
+        .header a,
+        .header form {
             color: white;
             text-decoration: none;
             margin: 0 15px;
             font-weight: bold;
+            display: inline-block;
         }
 
         .header a:hover {
+            text-decoration: underline;
+        }
+
+        .header form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header form input[type="submit"] {
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: inherit;
+            text-decoration: none;
+        }
+
+        .header form input[type="submit"]:hover {
             text-decoration: underline;
         }
     </style>
@@ -28,7 +49,7 @@
     <a sec:authorize="hasRole('USER')" th:href="@{/user/homePage}">Домашняя страница</a>
     <a sec:authorize="hasRole('USER')" th:href="@{/user/returnCar}">Вернуть машину</a>
     <a sec:authorize="hasRole('USER')" th:href="@{/user/myTrips}">Мои поездки</a>
-    <form th:method="post" th:action="@{/auth/logout}">
+    <form sec:authorize="isAuthenticated()" th:method="post" th:action="@{/auth/logout}">
         <input type="submit" value="Выйти">
     </form>
     <a sec:authorize="!isAuthenticated()" th:href="@{/auth/register}">Зарегистрироваться</a>
