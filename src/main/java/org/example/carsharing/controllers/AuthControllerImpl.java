@@ -56,8 +56,8 @@ public class AuthControllerImpl implements AuthController {
             logSample("POST", "register", signupInputModel.getNumber(), "Зарегистрировался");
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("signupInputModel", signupInputModel);
-            redirectAttributes.addFlashAttribute("errorMessage", "Номер уже используется.");
-            logSample("POST", "register", signupInputModel.getNumber(), "Номер телефона уже используется.");
+            redirectAttributes.addFlashAttribute("errorMessage", "Логин уже используется.");
+            logSample("POST", "register", signupInputModel.getNumber(), "Логин уже используется.");
             return "redirect:/auth/register";
         }
 
