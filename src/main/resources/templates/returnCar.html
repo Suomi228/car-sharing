@@ -16,13 +16,6 @@
             margin: 0 auto;
         }
 
-        .order-item {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
         .order-item input {
             width: calc(100% - 20px);
             padding: 8px;
@@ -43,7 +36,7 @@
             <input type="hidden" th:name="carId" th:value="${order.carId}">
             <input type="hidden" th:name="rentId" th:value="${order.rentId}">
             <label th:text="'Автомобиль: ' + ${order.carName}"></label>
-            <input type="text" th:name="adressInputModel.adress" th:value="${order.adressInputModel().adress}" placeholder="Введите адрес..." required>
+            <input type="text" th:name="adressInputModel.adress" th:value="${order.adressInputModel().adress}" placeholder="Введите адрес..." required minlength="3">
             <button type="submit">Вернуть машину</button>
         </div>
     </form>

@@ -30,13 +30,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<List<CustomerDTO>> findAll() {
+    public List<CustomerDTO> findAll() {
         List<CustomerEntity> customerEntities = customerRepository.findAll();
         List<CustomerDTO> customerDTOS = customerEntities.stream()
                 .map(customer -> modelMapper.map(customer, CustomerDTO.class))
                 .toList();
-        ResponseEntity<List<CustomerDTO>> responseEntity = ResponseEntity.ok().body(customerDTOS);
-        return responseEntity;
+        return customerDTOS;
     }
 
     @Override

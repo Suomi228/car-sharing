@@ -18,13 +18,13 @@
 <form th:action="@{/admin/updateCar}" method="post" th:object="${carInputModel}">
     <input type="hidden" name="id" th:value="*{id}">
     <label for="name">Название:</label>
-    <input type="text" id="name" name="name" th:value="*{name}" required>
+    <input type="text" id="name" name="name" th:value="*{name}" required minlength="3">
     <br>
     <label for="year">Год:</label>
     <input type="number" id="year" name="year" th:value="*{year}" min="1980" required>
     <br>
     <label for="number">Номер:</label>
-    <input type="text" id="number" name="number" th:value="*{number}" required>
+    <input type="text" id="number" name="number" th:value="*{number}" required minlength="3">
     <br>
     <label for="carClass">Класс:</label>
     <select id="carClass" name="carClass">
@@ -42,7 +42,7 @@
     </select>
     <br>
     <label for="adress">Адрес:</label>
-    <input type="text" id="adress" name="adress" th:value="*{adress}" required>
+    <input type="text" id="adress" name="adress" th:value="*{adress}" required minlength="3">
     <br>
     <button type="submit">Сохранить</button>
 </form>

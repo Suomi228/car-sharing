@@ -17,13 +17,13 @@
 <h1>Создание автомобиля</h1>
 <form th:action="@{/admin/create}" method="post" th:object="${carInputModel}">
     <label for="name">Название:</label>
-    <input type="text" id="name" th:field="*{name}" placeholder="Введите название" required><br><br>
+    <input type="text" id="name" th:field="*{name}" placeholder="Введите название" required minlength="3"><br><br>
 
     <label for="year">Год:</label>
     <input type="number" id="year" th:field="*{year}" placeholder="Введите год выпуска" value="1980" min="1980" required><br><br>
 
     <label for="number">Номер:</label>
-    <input type="text" id="number" th:field="*{number}" placeholder="Введите номер" required><br><br>
+    <input type="text" id="number" th:field="*{number}" placeholder="Введите номер" required minlength="3"><br><br>
 
     <label for="carClass">Класс:</label>
     <select id="carClass" th:field="*{carClass}" required>
@@ -39,7 +39,7 @@
     </select><br><br>
 
     <label for="adress">Адрес:</label>
-    <input type="text" id="adress" th:field="*{adress}" placeholder="Введите адрес" required><br><br>
+    <input type="text" id="adress" th:field="*{adress}" placeholder="Введите адрес" required minlength="3"><br><br>
 
     <button type="submit">Создать машину</button>
 </form>
